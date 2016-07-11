@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Collaborative Text Editor</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="user-scalable=0, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <!-- Google web fonts -->
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel='stylesheet'/>
+    <!-- The main CSS file -->
+    <link rel="stylesheet" type="text/css" href="uploadsection/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/mobile.css">
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script type='text/javascript' src='js/mobile.js'></script>
+    <script type='text/javascript' src='js/jquery-3.0.0.js'></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <!-- JavaScript Includes -->
+    <script src="uploadsection/js/jquery.knob.js"></script>
+    <!-- jQuery CTXEFile Upload Dependencies -->
+    <script src="uploadsection/js/jquery.ui.widget.js"></script>
+    <script src="uploadsection/js/jquery.iframe-transport.js"></script>
+    <script src="uploadsection/js/jquery.fileupload.js"></script>
+    <!-- Our main JS file -->
+    <script src="uploadsection/js/script.js"></script>
+
+    <script language="javascript" type="text/javascript">
+
+        function setbg(color) {
+            document.getElementById("textzone").style.background = color
+        }
+
+        function handleNameSubmitted() {
+            $('#nameDialog').dialog('close');
+            localStorage['username'] = $("#nameFromDialog").val();
+            $('#usernameToBeSent').val(localStorage['username']);
+        }
+        function fun() {
+            alert(localStorage['username']);
+            var data;
+//            $.post("http://localhost:8080/CollaborativeTextEditor/rest/service/saveFile", function (data) {
+//                $(".result").html(data);
+//            });
+             $.getJSON("http://localhost:8080/CollaborativeTextEditor/rest/service/allFiles", function (response) {
+//                $.getJSON("http://localhost:8080/CollaborativeTextEditor/rest/service/saveFile", function (response) {
+//                data = response;
+//                $.each(data, function (linktext, link) {
+//                    $("#textzone").append(link);
+//                    console.log(linktext);
+//                    console.log(link);
+//                });
+//            });
+//            }).error(function () {
+//                alert("Sorry could not proceed");
+            });
+//
+        }
+        // Action on getting the a name when someone enters
+        $(function () {
+            if (localStorage['username'] = $("#nameFromDialog").val() != null) {
+                $("#nameDialog").dialog({
+                    closeOnEscape: false,
+                    modal: true,
+                    open: function (event, ui) {
+                        $(".ui-dialog-titlebar-close", ui.dialog | ui).hide();
+                    }
+                });
+            }
+        });
+
+    </script>
+
+</head>
+<body>
+    <div id="header">
+        <h1><a href="index.html">Collaborative<span>Text Editor</span></a></h1>
+        <ul id="navigation">
+            <li class="current">
+                <a href="index.html">Home</a>
+            </li>
+        </ul>
+    </div>
+    <div id="body">
+        <div id="tagline">
+            <textarea id="textzone" id="styled" onfocus="setbg('#e5fff3');" onblur="setbg('white')" onkeyup="fun();"
+                      onmouseup="fun();"></textarea>
+
+        </div>
+        <div>
+            <input id="fileUpload" type="file" id="input">
+        </div>
+
+
+        <form id="upload" method="post" action="http://localhost:8080/CollaborativeTextEditor/rest/service/uploadFile" enctype="multipart/form-data">
+            <div id="drop">
+                Drop Here <br>
+
+                <a>Browse</a>
+                <input type="file" id="fileUploaded" name="fileUploaded" multiple/>
+                <input type="hidden" id="usernameToBeSent" name="usernameToBeSent" value="">
+            </div>
+
+            <ul>
+                <!-- The file uploads will be shown here -->
+            </ul>
+
+        </form>
+
+        <div id="nameDialog" title="Welcome to CTX Editor">
+            <form id="nameInterrogation" action="javascript:handleNameSubmitted()">
+                Your name:<input type="text" id="nameFromDialog">
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+
+    </div>
+    <div id="footer">
+        <div>
+            <p>
+                &copy; 2016 by Robert &amp; Collaborative Text Editor
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>
