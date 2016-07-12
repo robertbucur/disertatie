@@ -12,6 +12,7 @@
         <property name="show_sql">true</property>
         <property name="connection.pool_size">1</property>
 
-        <mapping class="ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFile"/>
+        <mapping resource="CTXEFileVersion.hbm.xml"/>
+        <mapping resource="CTXEFile.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

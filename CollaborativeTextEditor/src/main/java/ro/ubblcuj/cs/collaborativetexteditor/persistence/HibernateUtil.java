@@ -7,6 +7,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFile;
+import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFileVersion;
 
 import java.util.List;
 import java.util.Properties;
@@ -44,6 +45,19 @@ public class HibernateUtil {
 
         List<CTXEFile> files;
         Query query = session.createQuery("from CTXEFile");
+        files = query.list();
+
+        session.close();
+        return files;
+    }
+
+    public static List<CTXEFileVersion> getAllVersionsForFile (int fileId) {
+        Session session = getSession();
+        session.beginTransaction();
+
+        List<CTXEFileVersion> files;
+        Query query = session.createQuery("from CTXEFileVersion where fileId=:fileId")
+                .setInteger("fileId", fileId);
         files = query.list();
 
         session.close();

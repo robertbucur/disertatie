@@ -1,16 +1,17 @@
 
-#main {
+#leftSide {
 	float:left;
 	width:60%;
-	background:#9c9;
 }
-#sidebar {
+#rightSide {
 	float:right;
 	width:35%;
-	background:#c9c;
 }
 
 #selectParentFile {
+	width:100%;
+}
+#selectFileVersion {
 	width:100%;
 }
 body {
@@ -50,6 +51,7 @@ img {
 p {
 	line-height: 30px;
 	margin: 0;
+	color: #2e3134;
 }
 p a {
 	color: #fffff9;

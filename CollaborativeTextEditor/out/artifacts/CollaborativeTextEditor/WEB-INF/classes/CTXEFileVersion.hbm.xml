@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFileVersion" table="file_version">
+        <meta attribute="class-description">
+            This class contains the file_version detail.
+        </meta>
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="fileId" column="file_id" type="int"/>
+        <property name="versionNumber" column="version_number" type="int"/>
+        <property name="creationDate" column="date" type="date"/>
+        <property name="author" column="author" type="string"/>
+        <property name="fileNameComposed" column="file_name_composed" type="string"/>
+    </class>
+</hibernate-mapping>

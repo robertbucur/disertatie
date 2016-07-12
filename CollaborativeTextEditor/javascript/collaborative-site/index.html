@@ -68,6 +68,31 @@
             }
         });
 
+        // incarcare select cu nume fisiere disponibile
+        $( document ).ready(function() {
+            $.getJSON("http://localhost:8080/CollaborativeTextEditor/rest/service/allFiles", function( data ) {
+                $.each( data, function( key, val ) {
+                    $('#selectParentFile').append($('<option>', {
+                        value: val["id"],
+                        text: val["name"]
+                    }));
+                });
+            });
+        });
+
+        $(document).on('change','#selectParentFile',function(){
+            var url = "http://localhost:8080/CollaborativeTextEditor/rest/service/allVersions/";
+            url = url + $( "#selectParentFile option:selected" ).val();
+            $.getJSON(url, function( data ) {
+                $.each( data, function( key, val ) {
+                    $('#selectFileVersion').append($('<option>', {
+                        value: val["id"],
+                        text: val["fileNameComposed"]
+                    }));
+                });
+            });
+        });
+
     </script>
 
 </head>
@@ -82,17 +107,18 @@
         </ul>
     </div>
     <div id="body">
-        <div id="main">
-                <textarea id="textzone" onfocus="setbg('#e5fff3');" onblur="setbg('white')" onkeyup="fun();"
-                          onmouseup="fun();"></textarea>
-
+        <div id="leftSide">
+                <textarea id="textzone" onfocus="setbg('#e5fff3');" onblur="setbg('white')" onkeyup="fun();" onmouseup="fun();"></textarea>
         </div>
-        <div id="sidebar">
-            <select id="selectParentFile">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+
+        <div id="rightSide">
+            <p>List of files:</p>
+            <select name="selectParentFile" id="selectParentFile">
+                <!-- The list of files will be populated from DB -->
+            </select>
+            <p>List of versions:</p>
+            <select name="selectFileVersion" id="selectFileVersion">
+                <!-- The list of files will be populated from DB -->
             </select>
         </div>
 

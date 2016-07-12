@@ -6,6 +6,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFile;
+import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFileVersion;
 import ro.ubblcuj.cs.collaborativetexteditor.persistence.HibernateUtil;
 import ro.ubblcuj.cs.collaborativetexteditor.utils.FileService;
 import ro.ubblcuj.cs.collaborativetexteditor.utils.Utils;
@@ -53,6 +54,22 @@ public class UserService {
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(files);
+
+        return getResponse(jsonInString);
+    }
+
+    @GET
+    @Path("/allVersions/{fileId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllFileVersions(@PathParam("fileId") Integer fileId) throws IOException {
+        SessionFactory sessionFactory = HibernateUtil.configureSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        List<CTXEFileVersion> fileVersions = HibernateUtil.getAllVersionsForFile(fileId);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString = mapper.writeValueAsString(fileVersions);
 
         return getResponse(jsonInString);
     }
