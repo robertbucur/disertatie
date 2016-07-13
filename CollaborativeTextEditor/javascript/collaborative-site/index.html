@@ -26,35 +26,18 @@
 
     <script language="javascript" type="text/javascript">
 
-        function setbg(color) {
-            document.getElementById("textzone").style.background = color
-        }
-
         function handleNameSubmitted() {
             $('#nameDialog').dialog('close');
             localStorage['username'] = $("#nameFromDialog").val();
             $('#usernameToBeSent').val(localStorage['username']);
         }
-        function fun() {
-            //alert(localStorage['username']);
-            var data;
-//            $.post("http://localhost:8080/CollaborativeTextEditor/rest/service/saveFile", function (data) {
-//                $(".result").html(data);
-//            });
-             $.getJSON("http://localhost:8080/CollaborativeTextEditor/rest/service/allFiles", function (response) {
-//                $.getJSON("http://localhost:8080/CollaborativeTextEditor/rest/service/saveFile", function (response) {
-//                data = response;
-//                $.each(data, function (linktext, link) {
-//                    $("#textzone").append(link);
-//                    console.log(linktext);
-//                    console.log(link);
-//                });
-//            });
-//            }).error(function () {
-//                alert("Sorry could not proceed");
-            });
-//
+
+        // Announce the change on the file
+        function announceChange() {
+            var cursorPosition = $('#textzone').prop("selectionStart");
+            alert(cursorPosition);
         }
+
         // Action on getting the a name when someone enters
         $(function () {
             if (localStorage['username'] = $("#nameFromDialog").val() != null) {
@@ -80,7 +63,13 @@
             });
         });
 
+        // Action on selecting something else from files dropdown
         $(document).on('change','#selectParentFile',function(){
+            // clear the version select
+            $('#selectFileVersion')
+                    .empty()
+                    .append("<option selected disabled hidden style='display: none' value=''>Select your option</option>");
+
             var url = "http://localhost:8080/CollaborativeTextEditor/rest/service/allVersions/";
             url = url + $( "#selectParentFile option:selected" ).val();
             $.getJSON(url, function( data ) {
@@ -90,6 +79,22 @@
                         text: val["fileNameComposed"]
                     }));
                 });
+            });
+        });
+
+        // Action on selecting something else from files versions dropdown
+        $(document).on('change','#selectFileVersion',function(){
+            var url = "http://localhost:8080/CollaborativeTextEditor/rest/service/getFile/";
+            url = url + $( "#selectFileVersion option:selected" ).text()
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (data) {
+                    $("#textzone").val(data.toString());
+                },
+                error: function (xhr) {
+                    console.log(xhr);
+                }
             });
         });
 
@@ -108,17 +113,19 @@
     </div>
     <div id="body">
         <div id="leftSide">
-                <textarea id="textzone" onfocus="setbg('#e5fff3');" onblur="setbg('white')" onkeyup="fun();" onmouseup="fun();"></textarea>
+                <textarea id="textzone" onkeyup="announceChange();"></textarea>
         </div>
 
         <div id="rightSide">
             <p>List of files:</p>
             <select name="selectParentFile" id="selectParentFile">
                 <!-- The list of files will be populated from DB -->
+                <option selected disabled hidden style='display: none' value=''>Select your option</option>
             </select>
             <p>List of versions:</p>
             <select name="selectFileVersion" id="selectFileVersion">
                 <!-- The list of files will be populated from DB -->
+                <option selected disabled hidden style='display: none' value=''>Select your option</option>
             </select>
         </div>
 

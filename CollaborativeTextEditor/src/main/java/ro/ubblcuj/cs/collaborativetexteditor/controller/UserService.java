@@ -97,6 +97,16 @@ public class UserService {
         return Response.status(Response.Status.OK).build();
     }
 
+    @GET
+    @Path("/getFile/{fileName}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response getFile(@PathParam("fileName") String fileName) {
+        File file = new File(Utils.SERVER_UPLOAD_LOCATION_FOLDER + fileName);
+        return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
+                .header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"" ) //optional
+                .build();
+    }
+
     private Response getResponse(String json) {
         return Response
                 .status(200)

@@ -1,11 +1,11 @@
 
 #leftSide {
 	float:left;
-	width:60%;
+	width:75%;
 }
 #rightSide {
 	float:right;
-	width:35%;
+	width:20%;
 }
 
 #selectParentFile {
