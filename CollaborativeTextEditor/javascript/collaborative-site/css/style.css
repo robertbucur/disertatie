@@ -1,19 +1,5 @@
 
-#leftSide {
-	float:left;
-	width:75%;
-}
-#rightSide {
-	float:right;
-	width:20%;
-}
 
-#selectParentFile {
-	width:100%;
-}
-#selectFileVersion {
-	width:100%;
-}
 body {
 	background: #C63D0F;
 	color: #f5fff8;
@@ -163,15 +149,6 @@ p a:hover {
 	height: 100%;
 }
 
-/*#body div#tagline #textzone {*/
-	/*background:green;*/
-	/*height: 100%;*/
-	/*width: 90%;*/
-	/*position: relative;*/
-	/*right: 0;*/
-	/*top: 0;*/
-/*}*/
-
 
 
 #body div#tagline h1 {
@@ -286,11 +263,11 @@ p a:hover {
 	display: block;
 	font-family: 'latoregular';
 	font-size: 14px;
-	line-height: 30px;
+	line-height: 20px;
 	overflow: auto;
 	padding: 0 5px;
 	resize: none;
-	width: 100%;
+	width: 98%;
 	height: 550px;
 }
 #body form input#send {
@@ -443,4 +420,34 @@ p a:hover {
 	height: 30px;
 	margin: 0 0 0 23px;
 	width: 30px;
+}
+
+
+
+
+
+
+
+#leftSide {
+	position: relative;
+	float:left;
+	width:75%;
+}
+#rightSide {
+	float:right;
+	width:20%;
+}
+
+#selectParentFile {
+	width:100%;
+}
+#selectFileVersion {
+	width:100%;
+}
+
+#saveNewVersionButton {
+	position: absolute;
+	right: 0;
+	height: 50px;
+	width: 130px;
 }

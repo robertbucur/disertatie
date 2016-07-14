@@ -98,6 +98,11 @@
             });
         });
 
+        $(document).on('click','#saveNewVersionButton',function(){
+            $("#fileIdVersioning").val(111);
+            $("#fileNameVersioning").val("sdadasda");
+        });
+
     </script>
 
 </head>
@@ -113,7 +118,12 @@
     </div>
     <div id="body">
         <div id="leftSide">
-                <textarea id="textzone" onkeyup="announceChange();"></textarea>
+            <textarea id="textzone" onkeyup="announceChange();"></textarea>
+            <form id="saveNewVersionForm" method="post" action="http://localhost:8080/CollaborativeTextEditor/rest/service/saveVersion" enctype="multipart/form-data">
+                <input id="saveNewVersionButton" type="submit" value="Save Version"/>
+                <input id="fileIdVersioning" type="hidden" value=""/>
+                <input id="fileNameVersioning" type="hidden" value=""/>
+            </form>
         </div>
 
         <div id="rightSide">

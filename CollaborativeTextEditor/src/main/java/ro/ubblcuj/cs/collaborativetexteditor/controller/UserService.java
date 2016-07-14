@@ -38,7 +38,26 @@ public class UserService {
             e.printStackTrace();
         }
         return getResponse(null);
+    }
 
+    @POST
+    @Path("/saveVersion")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response saveFileVersion() {
+//        int nextVersion = HibernateUtil.getNextVersionNumber(fileId);
+//        java.io.File file = new java.io.File(fileName + nextVersion + ".txt");
+//
+//        try {
+//            if (file.createNewFile()) {
+//                System.out.println("CTXEFileVersion is created!");
+//            } else {
+//                System.out.println("CTXEFileVersion already exists.");
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        return getResponse(null);
     }
 
     // FUNCTIONAL

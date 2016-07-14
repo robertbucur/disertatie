@@ -1,8 +1,5 @@
 package ro.ubblcuj.cs.collaborativetexteditor.persistence;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
@@ -64,6 +61,19 @@ public class HibernateUtil {
         return files;
     }
 
+    public static int getNextVersionNumber (int fileId) {
+        Session session = getSession();
+        session.beginTransaction();
+
+        Query query = session.createQuery("select max(ctxfv.versionNumber) from CTXEFile ctxf" +
+                " join CTXEFileVersion ctxfv on ctxf.id = ctxfv.fileId" +
+                " where ctxf = :fileId")
+                .setInteger("fileId", fileId);
+        int nextVersionNumber = (Integer) query.uniqueResult();
+
+        session.close();
+        return ++nextVersionNumber;
+    }
 
     public static Session getSession(){
         SessionFactory sessionFactory = HibernateUtil.configureSessionFactory();
