@@ -65,6 +65,7 @@
 
         // Action on selecting something else from files dropdown
         $(document).on('change','#selectParentFile',function(){
+            $('#saveNewVersionButton').prop('disabled', true);
             // clear the version select
             $('#selectFileVersion')
                     .empty()
@@ -84,6 +85,7 @@
 
         // Action on selecting something else from files versions dropdown
         $(document).on('change','#selectFileVersion',function(){
+            $('#saveNewVersionButton').prop('disabled', false);
             var url = "http://localhost:8080/CollaborativeTextEditor/rest/service/getFile/";
             url = url + $( "#selectFileVersion option:selected" ).text()
             $.ajax({
@@ -98,10 +100,17 @@
             });
         });
 
-        $(document).on('click','#saveNewVersionButton',function(){
-            $("#fileIdVersioning").val(111);
-            $("#fileNameVersioning").val("sdadasda");
-        });
+        // on click send name and id of the selected version
+        function saveVersionFormSubmit(){
+            var fileId = $( "#selectParentFile option:selected" ).val();
+            var fileName = $( "#selectParentFile option:selected" ).text();
+            $.ajax({
+                url:'http://localhost:8080/CollaborativeTextEditor/rest/service/saveVersion',
+                type:'post',
+                data:[{name: "fileIdVersioning", value: fileId},
+                    {name: "fileNameVersioning", value: fileName}],
+            });
+        }
 
     </script>
 
@@ -119,10 +128,8 @@
     <div id="body">
         <div id="leftSide">
             <textarea id="textzone" onkeyup="announceChange();"></textarea>
-            <form id="saveNewVersionForm" method="post" action="http://localhost:8080/CollaborativeTextEditor/rest/service/saveVersion" enctype="multipart/form-data">
-                <input id="saveNewVersionButton" type="submit" value="Save Version"/>
-                <input id="fileIdVersioning" type="hidden" value=""/>
-                <input id="fileNameVersioning" type="hidden" value=""/>
+            <form id="saveNewVersionForm" onsubmit="saveVersionFormSubmit(); return false" enctype="application/x-www-form-urlencoded">
+                <input id="saveNewVersionButton" type="submit" value="Save Version" disabled/>
             </form>
         </div>
 

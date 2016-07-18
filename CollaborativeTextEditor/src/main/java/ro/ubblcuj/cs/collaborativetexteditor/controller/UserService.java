@@ -43,7 +43,11 @@ public class UserService {
     @POST
     @Path("/saveVersion")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response saveFileVersion() {
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response saveFileVersion(@FormParam("fileIdVersioning") Integer fileId,
+                                    @FormParam("fileNameVersioning") String fileName) {
+
+
 //        int nextVersion = HibernateUtil.getNextVersionNumber(fileId);
 //        java.io.File file = new java.io.File(fileName + nextVersion + ".txt");
 //
@@ -57,7 +61,7 @@ public class UserService {
 //            e.printStackTrace();
 //        }
 
-        return getResponse(null);
+        return getResponse(fileName + fileId);
     }
 
     // FUNCTIONAL
