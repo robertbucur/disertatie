@@ -6,6 +6,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFile;
+import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFileChange;
 import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFileVersion;
 import ro.ubblcuj.cs.collaborativetexteditor.persistence.HibernateUtil;
 import ro.ubblcuj.cs.collaborativetexteditor.utils.FileService;
@@ -62,6 +63,32 @@ public class UserService {
 //        }
 
         return getResponse(fileName + fileId);
+    }
+
+    @POST
+    @Path("/change")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response addChange(@FormParam("fileId") Integer fileId,
+                              @FormParam("fileVersionId") Integer fileVersionId,
+                              @FormParam("timestamp") Date timestamp,
+                              @FormParam("charColumn") Integer charColumn,
+                              @FormParam("charRow") Integer charRow,
+                              @FormParam("charPosition") Integer charPosition,
+                              @FormParam("charValue") String charValue) {
+
+        CTXEFileChange fileChange = new CTXEFileChange();
+        fileChange.setFileId(fileId);
+        fileChange.setFileVersionId(fileVersionId);
+        fileChange.setTimestamp(timestamp);
+        fileChange.setCharColumn(charColumn);
+        fileChange.setCharRow(charRow);
+        fileChange.setCharPosition(charPosition);
+        fileChange.setCharValue(charValue);
+
+        HibernateUtil.insertFileChange(fileChange);
+
+        return getResponse(null);
     }
 
     // FUNCTIONAL

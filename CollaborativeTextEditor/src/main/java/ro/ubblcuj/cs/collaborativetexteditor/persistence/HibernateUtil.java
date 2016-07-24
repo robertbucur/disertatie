@@ -4,6 +4,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFile;
+import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFileChange;
 import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFileVersion;
 
 import java.util.List;
@@ -73,6 +74,16 @@ public class HibernateUtil {
 
         session.close();
         return ++nextVersionNumber;
+    }
+
+    public static void insertFileChange(CTXEFileChange fileChange) {
+        Session session = getSession();
+        session.beginTransaction();
+
+        session.save(fileChange);
+        session.getTransaction().commit();
+
+        session.close();
     }
 
     public static Session getSession(){

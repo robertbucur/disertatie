@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFileChange" table="file_changes">
+        <meta attribute="class-description">
+            This class contains the file_changes detail.
+        </meta>
+        <id name="id" type="int" column="id">
+            <generator class="native"/>
+        </id>
+        <property name="fileId" column="file_id" type="int"/>
+        <property name="fileVersionId" column="file_version_id" type="int"/>
+        <property name="timestamp" column="timestamp" type="java.util.Date"/>
+        <property name="charColumn" column="char_column" type="int"/>
+        <property name="charRow" column="char_row" type="int"/>
+        <property name="charPosition" column="char_position" type="int"/>
+        <property name="charValue" column="char_value" type="string"/>
+    </class>
+</hibernate-mapping>
