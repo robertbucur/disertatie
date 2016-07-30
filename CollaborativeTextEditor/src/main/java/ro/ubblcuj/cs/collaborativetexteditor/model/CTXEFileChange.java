@@ -12,7 +12,7 @@ public class CTXEFileChange {
     private Integer fileId;
     private Integer fileVersionId;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss.SSS")
-    private Date timestamp;
+    private Date datetime;
     private Integer charColumn;
     private Integer charRow;
     private Integer charPosition;
@@ -42,12 +42,12 @@ public class CTXEFileChange {
         this.fileVersionId = fileVersionId;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
+    public Date getDatetime() {
+        return datetime;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public void setDatetime(Date timestamp) {
+        this.datetime = timestamp;
     }
 
     public Integer getCharColumn() {

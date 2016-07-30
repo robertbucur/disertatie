@@ -71,7 +71,6 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response addChange(@FormParam("fileId") Integer fileId,
                               @FormParam("fileVersionId") Integer fileVersionId,
-                              @FormParam("timestamp") Date timestamp,
                               @FormParam("charColumn") Integer charColumn,
                               @FormParam("charRow") Integer charRow,
                               @FormParam("charPosition") Integer charPosition,
@@ -80,7 +79,7 @@ public class UserService {
         CTXEFileChange fileChange = new CTXEFileChange();
         fileChange.setFileId(fileId);
         fileChange.setFileVersionId(fileVersionId);
-        fileChange.setTimestamp(timestamp);
+        fileChange.setDatetime(new Date());
         fileChange.setCharColumn(charColumn);
         fileChange.setCharRow(charRow);
         fileChange.setCharPosition(charPosition);

@@ -16,13 +16,15 @@ public class HibernateUtil {
     private static ServiceRegistry serviceRegistry;
 
     public static SessionFactory configureSessionFactory() throws HibernateException {
-        Configuration configuration = new Configuration();
-        configuration.configure();
+        if(sessionFactory == null) {
+            Configuration configuration = new Configuration();
+            configuration.configure();
 
-        Properties properties = configuration.getProperties();
+            Properties properties = configuration.getProperties();
 
-        serviceRegistry = new ServiceRegistryBuilder().applySettings(properties).buildServiceRegistry();
-        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+            serviceRegistry = new ServiceRegistryBuilder().applySettings(properties).buildServiceRegistry();
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        }
 
         return sessionFactory;
     }
@@ -75,8 +77,8 @@ public class HibernateUtil {
         session.close();
         return ++nextVersionNumber;
     }
-
     public static void insertFileChange(CTXEFileChange fileChange) {
+
         Session session = getSession();
         session.beginTransaction();
 

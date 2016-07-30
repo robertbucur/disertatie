@@ -33,10 +33,27 @@
         }
 
         // Announce the change on the file
-        function announceChange() {
-            var cursorPosition = $('#textzone').prop("selectionStart");
-            alert(cursorPosition);
+        function announceChange(e) {
+            // check to have only chars and simbols, excepting special keys
+            if (e.which !== 0) {
+                var charPosition = $('#textzone').prop("selectionStart");
+                var fileId = $( "#selectParentFile option:selected" ).val();
+                var fileVersionId = $( "#selectFileVersion option:selected" ).val();
+                var charValue = String.fromCharCode(e.which);
+                $.ajax({
+                    url:'http://localhost:8080/CollaborativeTextEditor/rest/service/change',
+                    type:'post',
+                    data:[{name: "fileId", value: fileId},
+                        {name: "fileVersionId", value: fileVersionId},
+                        {name: "charValue", value: charValue},
+                        {name: "charColumn", value: 0},
+                        {name: "charRow", value: 0},
+                        {name: "charPosition", value: charPosition}],
+                });
+            }
         }
+
+
 
         // Action on getting the a name when someone enters
         $(function () {
@@ -127,7 +144,7 @@
     </div>
     <div id="body">
         <div id="leftSide">
-            <textarea id="textzone" onkeyup="announceChange();"></textarea>
+            <textarea id="textzone" onkeypress="announceChange(event);"></textarea>
             <form id="saveNewVersionForm" onsubmit="saveVersionFormSubmit(); return false" enctype="application/x-www-form-urlencoded">
                 <input id="saveNewVersionButton" type="submit" value="Save Version" disabled/>
             </form>
