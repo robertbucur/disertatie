@@ -16,6 +16,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -74,20 +76,37 @@ public class UserService {
                               @FormParam("charColumn") Integer charColumn,
                               @FormParam("charRow") Integer charRow,
                               @FormParam("charPosition") Integer charPosition,
-                              @FormParam("charValue") String charValue) {
+                              @FormParam("charValue") String charValue,
+                              @FormParam("author") String author) throws ParseException {
 
         CTXEFileChange fileChange = new CTXEFileChange();
         fileChange.setFileId(fileId);
         fileChange.setFileVersionId(fileVersionId);
         fileChange.setDatetime(new Date());
-        fileChange.setCharColumn(charColumn);
-        fileChange.setCharRow(charRow);
         fileChange.setCharPosition(charPosition);
         fileChange.setCharValue(charValue);
+        fileChange.setAuthor(author);
 
         HibernateUtil.insertFileChange(fileChange);
 
         return getResponse(null);
+    }
+
+    @POST
+    @Path("/allChanges")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllFileChanges(@FormParam("fileId") Integer fileId,
+                                      @FormParam("fileVersionId") Integer fileVersionId,
+                                      @FormParam("lastUpdate") String lastUpdate,
+                                      @FormParam("author") String author) throws IOException, ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy+hh:mm:ss.SSS");
+        List<CTXEFileChange> changes = HibernateUtil.getAllChangesForFile(fileId, fileVersionId, sdf.parse(lastUpdate), author);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString = mapper.writeValueAsString(changes);
+        jsonInString = "{\"changes\":" + jsonInString +"}";
+
+        return getResponse(jsonInString);
     }
 
     // FUNCTIONAL
@@ -95,10 +114,6 @@ public class UserService {
     @Path("/allFiles")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllFiles() throws IOException {
-        SessionFactory sessionFactory = HibernateUtil.configureSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
         List<CTXEFile> files = HibernateUtil.getAllFiles();
 
         ObjectMapper mapper = new ObjectMapper();
@@ -111,10 +126,6 @@ public class UserService {
     @Path("/allVersions/{fileId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllFileVersions(@PathParam("fileId") Integer fileId) throws IOException {
-        SessionFactory sessionFactory = HibernateUtil.configureSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
         List<CTXEFileVersion> fileVersions = HibernateUtil.getAllVersionsForFile(fileId);
 
         ObjectMapper mapper = new ObjectMapper();

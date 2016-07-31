@@ -8,15 +8,22 @@ import java.util.Date;
  * Created by robytoxic on 24/07/2016.
  */
 public class CTXEFileChange {
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd+HH:mm:ss.SSS")
+    private Date datetime;
     private Integer id;
     private Integer fileId;
     private Integer fileVersionId;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss.SSS")
-    private Date datetime;
-    private Integer charColumn;
-    private Integer charRow;
     private Integer charPosition;
     private String charValue;
+    private String author;
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
     public Integer getId() {
         return id;
@@ -48,22 +55,6 @@ public class CTXEFileChange {
 
     public void setDatetime(Date timestamp) {
         this.datetime = timestamp;
-    }
-
-    public Integer getCharColumn() {
-        return charColumn;
-    }
-
-    public void setCharColumn(Integer charColumn) {
-        this.charColumn = charColumn;
-    }
-
-    public Integer getCharRow() {
-        return charRow;
-    }
-
-    public void setCharRow(Integer charRow) {
-        this.charRow = charRow;
     }
 
     public Integer getCharPosition() {

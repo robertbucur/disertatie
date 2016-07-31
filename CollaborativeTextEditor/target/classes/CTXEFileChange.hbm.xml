@@ -14,9 +14,8 @@
         <property name="fileId" column="file_id" type="int"/>
         <property name="fileVersionId" column="file_version_id" type="int"/>
         <property name="datetime" column="datetime" type="java.util.Date"/>
-        <property name="charColumn" column="char_column" type="int"/>
-        <property name="charRow" column="char_row" type="int"/>
         <property name="charPosition" column="char_position" type="int"/>
         <property name="charValue" column="char_value" type="string"/>
+        <property name="author" column="author" type="string"/>
     </class>
 </hibernate-mapping>

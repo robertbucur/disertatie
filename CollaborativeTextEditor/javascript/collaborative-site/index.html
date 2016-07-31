@@ -25,7 +25,9 @@
     <script src="uploadsection/js/script.js"></script>
 
     <script language="javascript" type="text/javascript">
-
+        var serviceHost = "http://localhost:8080/CollaborativeTextEditor/rest/service";
+        var lastUpdate = "31-07-2016+10:20:56.123";
+        var intervalTextChanges = null;
         function handleNameSubmitted() {
             $('#nameDialog').dialog('close');
             localStorage['username'] = $("#nameFromDialog").val();
@@ -41,19 +43,85 @@
                 var fileVersionId = $( "#selectFileVersion option:selected" ).val();
                 var charValue = String.fromCharCode(e.which);
                 $.ajax({
-                    url:'http://localhost:8080/CollaborativeTextEditor/rest/service/change',
+                    url: serviceHost + '/change',
                     type:'post',
                     data:[{name: "fileId", value: fileId},
                         {name: "fileVersionId", value: fileVersionId},
                         {name: "charValue", value: charValue},
                         {name: "charColumn", value: 0},
                         {name: "charRow", value: 0},
-                        {name: "charPosition", value: charPosition}],
+                        {name: "charPosition", value: charPosition},
+                        {name: "author", value: localStorage['username']}],
                 });
             }
         }
+        var i = 1;
+        function textareaUpdate() {
+            var fileId = $( "#selectParentFile option:selected" ).val();
+            var fileVersionId = $( "#selectFileVersion option:selected" ).val();
+            $.ajax({
+                url:serviceHost + '/allChanges',
+                type:'post',
+                data:[{name: "fileId", value: fileId},
+                    {name: "fileVersionId", value: fileVersionId},
+                    {name: "lastUpdate", value: lastUpdate},
+                    {name: "author", value: localStorage['username']}],
+                dataType: 'json',
+                success: function (data) {
+                    $.each( data["changes"], function( key, value ) {
+                        console.log(JSON.stringify(value["charPosition"] + value["charValue"]));
+                        insertAt(value["charValue"],value["charPosition"]);
+                    });
+                }
+            });
+        }
 
+        function insertAt (value, position) {
+            var cursorPosition = $('#textzone').prop("selectionStart");
+            if (value == "\b") {
+                $('#textzone').val($('#textzone').val().substring(0, position-1) + $('#textzone').val().substring(position));
+                if(cursorPosition < position) {
+                    setCaretPosition('textzone', cursorPosition);
+                } else {
+                    setCaretPosition('textzone', cursorPosition - 1);
+                }
+            } else {
+                $('#textzone').val($('#textzone').val().substring(0, position) + value + $('#textzone').val().substring(position));
+                if(cursorPosition > position) {
+                    setCaretPosition('textzone', cursorPosition + 1);
+                } else {
+                    setCaretPosition('textzone', cursorPosition);
+                }
+            }
 
+        }
+        function setCaretPosition(elemId, caretPos) {
+            var el = document.getElementById(elemId);
+            el.value = el.value;
+            // ^ this is used to not only get "focus", but
+            // to make sure we don't have it everything -selected-
+            // (it causes an issue in chrome, and having it doesn't hurt any other browser)
+            if (el !== null) {
+                if (el.createTextRange) {
+                    var range = el.createTextRange();
+                    range.move('character', caretPos);
+                    range.select();
+                    return true;
+                }
+                else {
+                    // (el.selectionStart === 0 added for Firefox bug)
+                    if (el.selectionStart || el.selectionStart === 0) {
+                        el.focus();
+                        el.setSelectionRange(caretPos, caretPos);
+                        return true;
+                    }
+                    else  { // fail city, fortunately this never happens (as far as I've tested) :)
+                        el.focus();
+                        return false;
+                    }
+                }
+            }
+        }
 
         // Action on getting the a name when someone enters
         $(function () {
@@ -70,7 +138,8 @@
 
         // incarcare select cu nume fisiere disponibile
         $( document ).ready(function() {
-            $.getJSON("http://localhost:8080/CollaborativeTextEditor/rest/service/allFiles", function( data ) {
+            $.getJSON(serviceHost + "/allFiles", function( data ) {
+                console.log(JSON.stringify(data));
                 $.each( data, function( key, val ) {
                     $('#selectParentFile').append($('<option>', {
                         value: val["id"],
@@ -88,7 +157,7 @@
                     .empty()
                     .append("<option selected disabled hidden style='display: none' value=''>Select your option</option>");
 
-            var url = "http://localhost:8080/CollaborativeTextEditor/rest/service/allVersions/";
+            var url = serviceHost + "/allVersions/";
             url = url + $( "#selectParentFile option:selected" ).val();
             $.getJSON(url, function( data ) {
                 $.each( data, function( key, val ) {
@@ -98,12 +167,13 @@
                     }));
                 });
             });
+            clearInterval(intervalTextChanges);
         });
 
         // Action on selecting something else from files versions dropdown
         $(document).on('change','#selectFileVersion',function(){
             $('#saveNewVersionButton').prop('disabled', false);
-            var url = "http://localhost:8080/CollaborativeTextEditor/rest/service/getFile/";
+            var url = serviceHost + "/getFile/";
             url = url + $( "#selectFileVersion option:selected" ).text()
             $.ajax({
                 url: url,
@@ -115,6 +185,8 @@
                     console.log(xhr);
                 }
             });
+            // start cicle for retrieving updates for textarea
+            intervalTextChanges = setInterval(textareaUpdate, 5000);
         });
 
         // on click send name and id of the selected version
@@ -122,7 +194,7 @@
             var fileId = $( "#selectParentFile option:selected" ).val();
             var fileName = $( "#selectParentFile option:selected" ).text();
             $.ajax({
-                url:'http://localhost:8080/CollaborativeTextEditor/rest/service/saveVersion',
+                url:serviceHost + '/saveVersion',
                 type:'post',
                 data:[{name: "fileIdVersioning", value: fileId},
                     {name: "fileNameVersioning", value: fileName}],

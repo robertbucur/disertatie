@@ -6,6 +6,6 @@ CREATE TABLE `file_changes` (
  `char_row` int(11) NOT NULL,
  `char_column` int(11) NOT NULL,
  `char_position` int(11) NOT NULL,
- `char_value` varchar(1) NOT NULL,
+ `char_value` varchar(2) NOT NULL,
  PRIMARY KEY (`id`)
 )
