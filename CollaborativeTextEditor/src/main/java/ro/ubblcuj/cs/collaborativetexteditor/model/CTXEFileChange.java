@@ -1,15 +1,10 @@
 package ro.ubblcuj.cs.collaborativetexteditor.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.util.Date;
-
 /**
  * Created by robytoxic on 24/07/2016.
  */
 public class CTXEFileChange {
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd+HH:mm:ss.SSS")
-    private Date datetime;
+    private long datetime;
     private Integer id;
     private Integer fileId;
     private Integer fileVersionId;
@@ -49,11 +44,11 @@ public class CTXEFileChange {
         this.fileVersionId = fileVersionId;
     }
 
-    public Date getDatetime() {
+    public long getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(Date timestamp) {
+    public void setDatetime(long timestamp) {
         this.datetime = timestamp;
     }
 

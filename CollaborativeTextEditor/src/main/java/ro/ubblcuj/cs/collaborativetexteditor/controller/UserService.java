@@ -80,21 +80,21 @@ public class UserService {
                               @FormParam("charPosition") Integer charPosition,
                               @FormParam("charValue") String charValue,
                               @FormParam("author") String author,
-                              @FormParam("lastUpdate") String lastUpdate) throws ParseException {
+                              @FormParam("lastUpdate") long lastUpdate) throws ParseException {
 
+        Date now = new Date();
         CTXEFileChange fileChange = new CTXEFileChange();
         fileChange.setFileId(fileId);
         fileChange.setFileVersionId(fileVersionId);
-        fileChange.setDatetime(new Date());
+        fileChange.setDatetime(now.getTime());
         fileChange.setCharPosition(charPosition);
         fileChange.setCharValue(charValue);
         fileChange.setAuthor(author);
 
-        List<CTXEFileChange> fileChanges = HibernateUtil.getAllChangesForFile(fileId, fileVersionId, sdf.parse(lastUpdate), author);
+        List<CTXEFileChange> fileChanges = HibernateUtil.getAllChangesForFile(fileId, fileVersionId, lastUpdate, author);
 
         Utils.applyOperationalTransformationOnChange(fileChanges, fileChange);
 
-        fileChange.setDatetime(null);
         HibernateUtil.insertFileChange(fileChange);
 
         return getResponse(null);
@@ -105,11 +105,10 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllFileChanges(@FormParam("fileId") Integer fileId,
                                       @FormParam("fileVersionId") Integer fileVersionId,
-                                      @FormParam("lastUpdate") String lastUpdate,
+                                      @FormParam("lastUpdate") long lastUpdate,
                                       @FormParam("author") String author) throws IOException, ParseException {
 
-        Date update = sdf.parse(lastUpdate);
-        List<CTXEFileChange> changes = HibernateUtil.getAllChangesForFile(fileId, fileVersionId, update, author);
+        List<CTXEFileChange> changes = HibernateUtil.getAllChangesForFile(fileId, fileVersionId, lastUpdate, author);
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(changes);

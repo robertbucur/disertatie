@@ -48,7 +48,7 @@ public class HibernateUtil {
         return files;
     }
 
-    public static List<CTXEFileChange> getAllChangesForFile(int fileId, int fileVersionId, Date lastUpdate, String author){
+    public static List<CTXEFileChange> getAllChangesForFile(int fileId, int fileVersionId, long lastUpdate, String author){
         Session session = getSession();
         session.beginTransaction();
 
@@ -56,7 +56,7 @@ public class HibernateUtil {
         Query query = session.createQuery("from CTXEFileChange where fileId=:fileId and fileVersionId=:fileVersionId and datetime >:lastUpdate and author !=:author order by datetime asc")
                 .setInteger("fileId", fileId)
                 .setInteger("fileVersionId", fileVersionId)
-                .setDate("lastUpdate", lastUpdate)
+                .setLong("lastUpdate", lastUpdate)
                 .setString("author", author);
         fileChanges = query.list();
 
