@@ -26,7 +26,7 @@
 
     <script language="javascript" type="text/javascript">
         var serviceHost = "http://localhost:8080/CollaborativeTextEditor/rest/service";
-        var lastUpdate = "31-07-2016+10:20:56.123";
+        var lastUpdate = "2016-07-31+10:20:56.123";
         var intervalTextChanges = null;
         function handleNameSubmitted() {
             $('#nameDialog').dialog('close');
@@ -51,7 +51,8 @@
                         {name: "charColumn", value: 0},
                         {name: "charRow", value: 0},
                         {name: "charPosition", value: charPosition},
-                        {name: "author", value: localStorage['username']}],
+                        {name: "author", value: localStorage['username']},
+                        {name: "lastUpdate", value: lastUpdate}],
                 });
             }
         }
@@ -70,6 +71,8 @@
                 success: function (data) {
                     $.each( data["changes"], function( key, value ) {
                         console.log(JSON.stringify(value["charPosition"] + value["charValue"]));
+                        lastUpdate = value["datetime"];
+                        alert(lastUpdate);
                         insertAt(value["charValue"],value["charPosition"]);
                     });
                 }

@@ -24,6 +24,8 @@ import java.util.List;
 @Path("/service")
 public class UserService {
 
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd+hh:mm:ss.SSS");
+
     @GET
     @Path("/newFile/{fileName}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -77,7 +79,8 @@ public class UserService {
                               @FormParam("charRow") Integer charRow,
                               @FormParam("charPosition") Integer charPosition,
                               @FormParam("charValue") String charValue,
-                              @FormParam("author") String author) throws ParseException {
+                              @FormParam("author") String author,
+                              @FormParam("lastUpdate") String lastUpdate) throws ParseException {
 
         CTXEFileChange fileChange = new CTXEFileChange();
         fileChange.setFileId(fileId);
@@ -87,6 +90,11 @@ public class UserService {
         fileChange.setCharValue(charValue);
         fileChange.setAuthor(author);
 
+        List<CTXEFileChange> fileChanges = HibernateUtil.getAllChangesForFile(fileId, fileVersionId, sdf.parse(lastUpdate), author);
+
+        Utils.applyOperationalTransformationOnChange(fileChanges, fileChange);
+
+        fileChange.setDatetime(null);
         HibernateUtil.insertFileChange(fileChange);
 
         return getResponse(null);
@@ -99,8 +107,9 @@ public class UserService {
                                       @FormParam("fileVersionId") Integer fileVersionId,
                                       @FormParam("lastUpdate") String lastUpdate,
                                       @FormParam("author") String author) throws IOException, ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy+hh:mm:ss.SSS");
-        List<CTXEFileChange> changes = HibernateUtil.getAllChangesForFile(fileId, fileVersionId, sdf.parse(lastUpdate), author);
+
+        Date update = sdf.parse(lastUpdate);
+        List<CTXEFileChange> changes = HibernateUtil.getAllChangesForFile(fileId, fileVersionId, update, author);
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(changes);

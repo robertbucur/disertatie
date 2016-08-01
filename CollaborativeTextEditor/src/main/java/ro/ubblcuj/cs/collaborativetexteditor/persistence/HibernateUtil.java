@@ -53,7 +53,7 @@ public class HibernateUtil {
         session.beginTransaction();
 
         List<CTXEFileChange> fileChanges;
-        Query query = session.createQuery("from CTXEFileChange where fileId=:fileId and fileVersionId=:fileVersionId and datetime >:lastUpdate and author !=:author")
+        Query query = session.createQuery("from CTXEFileChange where fileId=:fileId and fileVersionId=:fileVersionId and datetime >:lastUpdate and author !=:author order by datetime asc")
                 .setInteger("fileId", fileId)
                 .setInteger("fileVersionId", fileVersionId)
                 .setDate("lastUpdate", lastUpdate)
