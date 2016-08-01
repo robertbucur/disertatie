@@ -79,6 +79,9 @@
         }
 
         function insertAt (value, position) {
+            if(value == "\r") {
+                value = "\n";
+            }
             var cursorPosition = $('#textzone').prop("selectionStart");
             if (value == "\b") {
                 $('#textzone').val($('#textzone').val().substring(0, position-1) + $('#textzone').val().substring(position));
@@ -141,7 +144,6 @@
         // incarcare select cu nume fisiere disponibile
         $( document ).ready(function() {
             $.getJSON(serviceHost + "/allFiles", function( data ) {
-                console.log(JSON.stringify(data));
                 $.each( data, function( key, val ) {
                     $('#selectParentFile').append($('<option>', {
                         value: val["id"],
@@ -169,6 +171,7 @@
                     }));
                 });
             });
+            $("#textzone").val("")
             clearInterval(intervalTextChanges);
         });
 
@@ -188,7 +191,8 @@
                 }
             });
             // start cicle for retrieving updates for textarea
-            intervalTextChanges = setInterval(textareaUpdate, 5000);
+            intervalTextChanges = setInterval(textareaUpdate, 4000);
+            setCaretPosition('textzone', 0);
         });
 
         // on click send name and id of the selected version

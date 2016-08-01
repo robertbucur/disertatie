@@ -36,6 +36,16 @@ public class HibernateUtil {
         session.close();
     }
 
+    public static void saveFileVersionToDb(CTXEFileVersion fileVersion) {
+        Session session = getSession();
+        session.beginTransaction();
+
+        session.save(fileVersion);
+        session.getTransaction().commit();
+
+        session.close();
+    }
+
     public static List<CTXEFile> getAllFiles(){
         Session session = getSession();
         session.beginTransaction();

@@ -1,6 +1,8 @@
 package ro.ubblcuj.cs.collaborativetexteditor.utils;
 
+import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFile;
 import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFileChange;
+import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFileVersion;
 
 import java.util.List;
 
@@ -19,5 +21,16 @@ public class Utils {
             }
         }
         return null;
+    }
+
+    public static CTXEFileVersion getFileVersionFromFile(CTXEFile file) {
+        CTXEFileVersion fileVersion = new CTXEFileVersion();
+        fileVersion.setFileId(file.getId());
+        fileVersion.setCreationDate(file.getLastModified());
+        fileVersion.setAuthor(file.getLastEditor());
+        fileVersion.setVersionNumber(0);
+        fileVersion.setFileNameComposed(file.getName());
+
+        return fileVersion;
     }
 }

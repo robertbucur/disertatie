@@ -162,6 +162,9 @@ public class UserService {
         FileService.saveFileToServer(fileInputStream, filePath);
         HibernateUtil.saveFileToDb(file);
 
+        CTXEFileVersion fileVersion = Utils.getFileVersionFromFile(file);
+        HibernateUtil.saveFileVersionToDb(fileVersion);
+
         return Response.status(Response.Status.OK).build();
     }
 
