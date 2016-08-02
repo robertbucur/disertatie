@@ -91,9 +91,7 @@ public class HibernateUtil {
         Session session = getSession();
         session.beginTransaction();
 
-        Query query = session.createQuery("select max(ctxfv.versionNumber) from CTXEFile ctxf" +
-                " join CTXEFileVersion ctxfv on ctxf.id = ctxfv.fileId" +
-                " where ctxf = :fileId")
+        Query query = session.createQuery("select max(ctxfv.versionNumber) from CTXEFile ctxf join CTXEFileVersion ctxfv on ctxf.id = ctxfv.fileId where ctxf =:fileId")
                 .setInteger("fileId", fileId);
         int nextVersionNumber = (Integer) query.uniqueResult();
 

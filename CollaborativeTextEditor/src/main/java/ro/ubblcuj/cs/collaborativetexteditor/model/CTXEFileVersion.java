@@ -11,8 +11,7 @@ public class CTXEFileVersion {
     private Integer id;
     private Integer fileId;
     private Integer versionNumber;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-    private Date creationDate;
+    private long creationDate;
     private String author;
     private String fileNameComposed;
 
@@ -40,11 +39,11 @@ public class CTXEFileVersion {
         this.versionNumber = versionNumber;
     }
 
-    public Date getCreationDate() {
+    public long getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(long creationDate) {
         this.creationDate = creationDate;
     }
 

@@ -24,8 +24,6 @@ import java.util.List;
 @Path("/service")
 public class UserService {
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd+hh:mm:ss.SSS");
-
     @GET
     @Path("/newFile/{fileName}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -50,23 +48,23 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response saveFileVersion(@FormParam("fileIdVersioning") Integer fileId,
-                                    @FormParam("fileNameVersioning") String fileName) {
+                                    @FormParam("fileNameVersioning") String fileName,
+                                    @FormParam("fileContent") String fileContent) throws IOException {
 
 
-//        int nextVersion = HibernateUtil.getNextVersionNumber(fileId);
-//        java.io.File file = new java.io.File(fileName + nextVersion + ".txt");
-//
-//        try {
-//            if (file.createNewFile()) {
-//                System.out.println("CTXEFileVersion is created!");
-//            } else {
-//                System.out.println("CTXEFileVersion already exists.");
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        int nextVersion = HibernateUtil.getNextVersionNumber(fileId);
+        File file = new java.io.File(fileName + nextVersion + ".txt");
 
-        return getResponse(fileName + fileId);
+        if (file.createNewFile()) {
+            System.out.println("CTXEFileVersion is created!");
+            FileOutputStream out = new FileOutputStream(file);
+            out.write(fileContent.getBytes());
+            out.close();
+        } else {
+            System.out.println("CTXEFileVersion already exists.");
+        }
+
+        return getResponse(fileName + fileId + nextVersion);
     }
 
     @POST
@@ -155,7 +153,7 @@ public class UserService {
         String filePath = Utils.SERVER_UPLOAD_LOCATION_FOLDER + contentDispositionHeader.getFileName();
         CTXEFile file = new CTXEFile();
         file.setLastEditor(username);
-        file.setLastModified(new Date());
+        file.setLastModified(new Date().getTime());
         file.setName(contentDispositionHeader.getFileName());
 
         // save the file to the server and DB

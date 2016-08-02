@@ -13,7 +13,7 @@
         </id>
         <property name="fileId" column="file_id" type="int"/>
         <property name="versionNumber" column="version_number" type="int"/>
-        <property name="creationDate" column="date" type="date"/>
+        <property name="creationDate" column="date" type="long"/>
         <property name="author" column="author" type="string"/>
         <property name="fileNameComposed" column="file_name_composed" type="string"/>
     </class>

@@ -168,7 +168,7 @@
                     $('#selectFileVersion').append($('<option>', {
                         value: val["id"],
                         text: val["fileNameComposed"]
-                    }));
+                    }).attr("timestamp", val["creationDate"]));
                 });
             });
             $("#textzone").val("")
@@ -199,11 +199,13 @@
         function saveVersionFormSubmit(){
             var fileId = $( "#selectParentFile option:selected" ).val();
             var fileName = $( "#selectParentFile option:selected" ).text();
+            var fileContent = $("#texzone").val();
             $.ajax({
                 url:serviceHost + '/saveVersion',
                 type:'post',
                 data:[{name: "fileIdVersioning", value: fileId},
-                    {name: "fileNameVersioning", value: fileName}],
+                    {name: "fileNameVersioning", value: fileName},
+                    {name: "fileContent", value: fileContent}],
             });
         }
 

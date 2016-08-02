@@ -10,9 +10,7 @@ import java.util.Date;
 public class CTXEFile {
     private Integer id;
     private String name;
-
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-    private Date lastModified;
+    private long lastModified;
     private String lastEditor;
 
     @Id
@@ -33,11 +31,11 @@ public class CTXEFile {
         this.name = name;
     }
 
-    public Date getLastModified() {
+    public long getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(Date lastModified) {
+    public void setLastModified(long lastModified) {
         this.lastModified = lastModified;
     }
 

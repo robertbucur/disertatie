@@ -2,7 +2,7 @@ CREATE TABLE `file_version` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
  `file_id` int(11) NOT NULL,
  `version_number` int(11) NOT NULL,
- `date` date NOT NULL,
+ `date` bigint(20) NOT NULL,
  `author` varchar(100) NOT NULL,
  `file_name_composed` varchar(100) NOT NULL,
  PRIMARY KEY (`id`),
