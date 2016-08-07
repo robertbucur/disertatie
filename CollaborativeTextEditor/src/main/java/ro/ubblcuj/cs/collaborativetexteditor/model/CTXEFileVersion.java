@@ -1,9 +1,5 @@
 package ro.ubblcuj.cs.collaborativetexteditor.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.util.Date;
-
 /**
  * Created by robytoxic on 12/07/2016.
  */
@@ -14,6 +10,15 @@ public class CTXEFileVersion {
     private long creationDate;
     private String author;
     private String fileNameComposed;
+    private String identifier;
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
 
     public Integer getId() {
         return id;

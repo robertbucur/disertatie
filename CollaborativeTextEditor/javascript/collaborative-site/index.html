@@ -27,7 +27,9 @@
     <script language="javascript" type="text/javascript">
         var serviceHost = "http://localhost:8080/CollaborativeTextEditor/rest/service";
         var lastUpdate = "1469912400000";
+        var params = getSearchParameters();
         var intervalTextChanges = null;
+        var fileVersionTemporaryName = null;
         function handleNameSubmitted() {
             $('#nameDialog').dialog('close');
             localStorage['username'] = $("#nameFromDialog").val();
@@ -143,14 +145,24 @@
 
         // incarcare select cu nume fisiere disponibile
         $( document ).ready(function() {
-            $.getJSON(serviceHost + "/allFiles", function( data ) {
-                $.each( data, function( key, val ) {
+            $.getJSON(serviceHost + "/allFiles", function (data) {
+                $.each(data, function (key, val) {
                     $('#selectParentFile').append($('<option>', {
                         value: val["id"],
                         text: val["name"]
                     }));
                 });
+                if (params.identifier != null) {
+                    var urlDetails = "/details/" + params.identifier;
+                    $.getJSON(serviceHost + urlDetails, function (data) {
+                        $("#selectParentFile").val(data["fileId"]).trigger('change');
+                        $("#selectFileVersion").val(data["id"]);
+                        fileVersionTemporaryName = data["fileNameComposed"];
+                        $("#selectFileVersion").trigger('change')
+                    });
+                }
             });
+
         });
 
         // Action on selecting something else from files dropdown
@@ -179,7 +191,11 @@
         $(document).on('change','#selectFileVersion',function(){
             $('#saveNewVersionButton').prop('disabled', false);
             var url = serviceHost + "/getFile/";
-            url = url + $( "#selectFileVersion option:selected" ).text()
+            var selectedValue = $( "#selectFileVersion option:selected" ).text();
+            if (selectedValue == "") {
+                selectedValue = fileVersionTemporaryName;
+            }
+            url = url + selectedValue;
             $.ajax({
                 url: url,
                 type: 'GET',
@@ -208,6 +224,22 @@
                     {name: "fileContent", value: fileContent}],
             });
         }
+
+        //PARAMETERS IN URL
+        function getSearchParameters() {
+            var prmstr = window.location.search.substr(1);
+            return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
+        }
+        function transformToAssocArray( prmstr ) {
+            var params = {};
+            var prmarr = prmstr.split("&");
+            for ( var i = 0; i < prmarr.length; i++) {
+                var tmparr = prmarr[i].split("=");
+                params[tmparr[0]] = tmparr[1];
+            }
+            return params;
+        }
+
 
     </script>
 

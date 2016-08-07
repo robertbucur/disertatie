@@ -176,6 +176,17 @@ public class UserService {
                 .build();
     }
 
+    @GET
+    @Path("/details/{identifier}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDetailsBasedOnIdentifier(@PathParam("identifier") String identifier) throws IOException {
+        CTXEFileVersion details = HibernateUtil.getIdentifierDetails(identifier);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString = mapper.writeValueAsString(details);
+
+        return getResponse(jsonInString);
+    }
+
     private Response getResponse(String json) {
         return Response
                 .status(200)

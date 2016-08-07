@@ -16,5 +16,6 @@
         <property name="creationDate" column="date" type="long"/>
         <property name="author" column="author" type="string"/>
         <property name="fileNameComposed" column="file_name_composed" type="string"/>
+        <property name="identifier" column="identifier" type="string"/>
     </class>
 </hibernate-mapping>

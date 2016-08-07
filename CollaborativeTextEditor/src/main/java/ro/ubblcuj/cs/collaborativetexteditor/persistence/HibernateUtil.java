@@ -108,4 +108,17 @@ public class HibernateUtil {
 
         session.close();
     }
+
+    public static CTXEFileVersion getIdentifierDetails(String identifier) {
+        Session session = getSession();
+        session.beginTransaction();
+
+        List<CTXEFileVersion> files;
+        Query query = session.createQuery("from CTXEFileVersion where identifier=:identifier")
+                .setString("identifier", identifier);
+        files = query.list();
+
+        session.close();
+        return files.get(0);
+    }
 }
