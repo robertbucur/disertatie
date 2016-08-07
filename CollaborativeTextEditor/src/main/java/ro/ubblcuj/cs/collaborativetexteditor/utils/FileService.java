@@ -29,6 +29,15 @@ public class FileService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public static void createNewFileToServer(String fileName) throws IOException {
+        File file = new File(fileName);
+
+        if (file.createNewFile()) {
+            System.out.println("CTXEFile is created!");
+        } else {
+            System.out.println("CTXEFile already exists.");
+        }
     }
 }

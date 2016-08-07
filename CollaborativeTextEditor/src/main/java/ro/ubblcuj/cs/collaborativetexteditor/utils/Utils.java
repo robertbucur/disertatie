@@ -26,12 +26,14 @@ public class Utils {
     }
 
     public static CTXEFileVersion getFileVersionFromFile(CTXEFile file) {
+        String uniqueIdentifier = Utils.getUniqueIdentifier().substring(0,9);
         CTXEFileVersion fileVersion = new CTXEFileVersion();
         fileVersion.setFileId(file.getId());
         fileVersion.setCreationDate(file.getLastModified());
         fileVersion.setAuthor(file.getLastEditor());
         fileVersion.setVersionNumber(0);
         fileVersion.setFileNameComposed(file.getName());
+        fileVersion.setIdentifier(uniqueIdentifier);
 
         return fileVersion;
     }

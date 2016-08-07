@@ -122,7 +122,7 @@ p a:hover {
 	background: #c4c7b8;
 	margin: 1px auto 0;
 	max-width: 880px;
-	min-height: 600px;
+	min-height: 640px;
 	overflow: hidden;
 	padding: 45px 40px 46px;
 }
@@ -448,6 +448,6 @@ p a:hover {
 #saveNewVersionButton {
 	position: absolute;
 	right: 0;
-	height: 50px;
+	height: 35px;
 	width: 130px;
 }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="user-scalable=0, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <!-- Google web fonts -->
-    <link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel='stylesheet'/>
+    <link href="css/css.css" rel='stylesheet'/>
     <!-- The main CSS file -->
     <link rel="stylesheet" type="text/css" href="uploadsection/css/style.css"/>
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -25,7 +25,10 @@
     <script src="uploadsection/js/script.js"></script>
 
     <script language="javascript" type="text/javascript">
-        var serviceHost = "http://localhost:8080/CollaborativeTextEditor/rest/service";
+        var host = "http://localhost:8080";
+        var serviceHost = host + "/CollaborativeTextEditor/rest/service";
+
+        var currentFileIdentifier = null;
         var lastUpdate = "1469912400000";
         var params = getSearchParameters();
         var intervalTextChanges = null;
@@ -34,6 +37,10 @@
             $('#nameDialog').dialog('close');
             localStorage['username'] = $("#nameFromDialog").val();
             $('#usernameToBeSent').val(localStorage['username']);
+        }
+
+        function handleFileNameSubmitted() {
+            $('#fileNameDialog').dialog('close');
         }
 
         // Announce the change on the file
@@ -62,22 +69,24 @@
         function textareaUpdate() {
             var fileId = $( "#selectParentFile option:selected" ).val();
             var fileVersionId = $( "#selectFileVersion option:selected" ).val();
-            $.ajax({
-                url:serviceHost + '/allChanges',
-                type:'post',
-                data:[{name: "fileId", value: fileId},
-                    {name: "fileVersionId", value: fileVersionId},
-                    {name: "lastUpdate", value: lastUpdate},
-                    {name: "author", value: localStorage['username']}],
-                dataType: 'json',
-                success: function (data) {
-                    $.each( data["changes"], function( key, value ) {
-                        console.log(JSON.stringify(value["charPosition"] + value["charValue"]));
-                        lastUpdate = value["datetime"];
-                        insertAt(value["charValue"],value["charPosition"]);
-                    });
-                }
-            });
+            if(fileId != "" && fileVersionId != "") {
+                $.ajax({
+                    url: serviceHost + '/allChanges',
+                    type: 'post',
+                    data: [{name: "fileId", value: fileId},
+                        {name: "fileVersionId", value: fileVersionId},
+                        {name: "lastUpdate", value: lastUpdate},
+                        {name: "author", value: localStorage['username']}],
+                    dataType: 'json',
+                    success: function (data) {
+                        $.each(data["changes"], function (key, value) {
+                            console.log(JSON.stringify(value["charPosition"] + value["charValue"]));
+                            lastUpdate = value["datetime"];
+                            insertAt(value["charValue"], value["charPosition"]);
+                        });
+                    }
+                });
+            }
         }
 
         function insertAt (value, position) {
@@ -159,6 +168,7 @@
                         $("#selectFileVersion").val(data["id"]);
                         fileVersionTemporaryName = data["fileNameComposed"];
                         $("#selectFileVersion").trigger('change')
+                        currentFileIdentifier = params.identifier;
                     });
                 }
             });
@@ -167,8 +177,8 @@
 
         // Action on selecting something else from files dropdown
         $(document).on('change','#selectParentFile',function(){
-            $("#textzone").val("")
             clearInterval(intervalTextChanges);
+            $("#textzone").val("")
             $('#saveNewVersionButton').prop('disabled', true);
             // clear the version select
             $('#selectFileVersion')
@@ -182,13 +192,15 @@
                     $('#selectFileVersion').append($('<option>', {
                         value: val["id"],
                         text: val["fileNameComposed"]
-                    }).attr("timestamp", val["creationDate"]));
+                    }).attr("timestamp", val["creationDate"])
+                        .attr("identifier", val["identifier"]));
                 });
             });
         });
 
         // Action on selecting something else from files versions dropdown
         $(document).on('change','#selectFileVersion',function(){
+            currentFileIdentifier = $("option:selected", this).attr("identifier");
             $('#saveNewVersionButton').prop('disabled', false);
             var url = serviceHost + "/getFile/";
             var selectedValue = $( "#selectFileVersion option:selected" ).text();
@@ -201,6 +213,9 @@
                 type: 'GET',
                 success: function (data) {
                     $("#textzone").val(data.toString());
+                    var shareLink = window.location.pathname + "?identifier=" + currentFileIdentifier;
+                    $("#shareLink").attr("href", shareLink);
+                    $("#shareLink").text(shareLink);
                 },
                 error: function (xhr) {
                     console.log(xhr);
@@ -224,6 +239,7 @@
                     {name: "fileContent", value: fileContent},
                     {name: "fileContent", value: localStorage['username']}],
             });
+            alert("File Version successfully saved!");
         }
 
         //PARAMETERS IN URL
@@ -241,7 +257,47 @@
             return params;
         }
 
+        $(document).ready(function() {
+            if(params.username != "") {
+                $("#nameFromDialog").val(params.username);
+            }
+            $("#deleteVersionButton").click(function () {
+                deleteFileVersion()
+            });
+            $("#saveNewFileButton").click(function () {
+                saveNewFile()
+            });
+        });
 
+        function deleteFileVersion() {
+            alert("delete");
+        }
+        function saveNewFile() {
+            var fileName = $("#newFileName").val();
+            if (fileName == "") {
+                alert("Please enter a file name!");
+            } else {
+                $.ajax({
+                    url:serviceHost + '/newFile',
+                    type:'post',
+                    data:[{name: "fileName", value: fileName},
+                        {name: "author", value: localStorage['username']}],
+                    dataType: 'json',
+                    success: function (data) {
+                        var shareLink = window.location.pathname + "?identifier=" + data["identifier"];
+                        $("#shareLink").attr("href", shareLink);
+                        $("#shareLink").text(shareLink);
+                        currentFileIdentifier = data["identifier"];
+                        alert("File Created!");
+                        window.location.replace(shareLink + "&username=" + localStorage['username']);
+                    },
+                    error: function () {
+                        alert("ERROR: File could not be created!");
+                        $("#newFileName").val("");
+                    }
+                });
+            }
+        }
     </script>
 
 </head>
@@ -256,6 +312,10 @@
         </ul>
     </div>
     <div id="body">
+        <div id="shareMessage">
+            <p>For sharing this file with others use this link:<br><a id="shareLink"> A file needs to be selected in order to generate a link</a></p>
+
+        </div>
         <div id="leftSide">
             <textarea id="textzone" onkeypress="announceChange(event);"></textarea>
             <form id="saveNewVersionForm" onsubmit="saveVersionFormSubmit(); return false" enctype="application/x-www-form-urlencoded">
@@ -274,6 +334,13 @@
                 <!-- The list of files will be populated from DB -->
                 <option selected disabled hidden style='display: none' value=''>Select your option</option>
             </select>
+            <br><br><br>
+            <input id="deleteVersionButton" type="button" value="Delete File Version" />
+            <br><br>
+            <p>Create new file:</p>
+            <input type="text" id="newFileName">
+            <input id="saveNewFileButton" type="button" value="Create File" />
+
         </div>
 
         <div id="nameDialog" title="Welcome to CTX Editor">

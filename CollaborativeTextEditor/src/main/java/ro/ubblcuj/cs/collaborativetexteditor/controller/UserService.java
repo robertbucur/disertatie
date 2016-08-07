@@ -24,25 +24,6 @@ import java.util.List;
 @Path("/service")
 public class UserService {
 
-    @GET
-    @Path("/newFile/{fileName}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response createFile(@PathParam("fileName") String fileName) {
-        java.io.File file = new java.io.File(fileName + ".txt");
-
-        try {
-            if (file.createNewFile()) {
-                System.out.println("CTXEFile is created!");
-            } else {
-                System.out.println("CTXEFile already exists.");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return getResponse(null);
-    }
-
     @POST
     @Path("/saveVersion")
     @Produces(MediaType.APPLICATION_JSON)
@@ -53,13 +34,16 @@ public class UserService {
                                     @FormParam("fileContent") String fileContent) throws IOException {
 
         if(author == null) { author = "";}
+        String fullFileName;
         int nextVersion = HibernateUtil.getNextVersionNumber(fileId);
         String uniqueIdentifier = Utils.getUniqueIdentifier().substring(0,9);
         int p = fileName.lastIndexOf(".");
-        String trimedFileName = fileName.substring(0, p);
-        String updatedText = fileContent.replaceAll("\n", System.getProperty("line.separator"));
-
-        File file = new java.io.File(Utils.SERVER_UPLOAD_LOCATION_FOLDER + trimedFileName + nextVersion + ".txt");
+        if (p >= 0){
+            fullFileName = Utils.SERVER_UPLOAD_LOCATION_FOLDER + fileName.substring(0, p) + nextVersion + fileName.substring(p);
+        } else {
+            fullFileName = Utils.SERVER_UPLOAD_LOCATION_FOLDER + fileName + nextVersion;
+        }
+        File file = new java.io.File(fullFileName);
 
         if (file.createNewFile()) {
             System.out.println("CTXEFileVersion is created!");
@@ -180,6 +164,31 @@ public class UserService {
         HibernateUtil.saveFileVersionToDb(fileVersion);
 
         return Response.status(Response.Status.OK).build();
+    }
+
+    @POST
+    @Path("/newFile")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response saveNewFile(@FormParam("fileName") String fileName,
+                              @FormParam("author") String author) throws IOException, ParseException {
+
+        String filePath = Utils.SERVER_UPLOAD_LOCATION_FOLDER + fileName;
+        CTXEFile file = new CTXEFile();
+        file.setLastEditor(author);
+        file.setLastModified(new Date().getTime());
+        file.setName(fileName);
+
+        // save the file to the server and DB
+        FileService.createNewFileToServer(filePath);
+        HibernateUtil.saveFileToDb(file);
+
+        CTXEFileVersion fileVersion = Utils.getFileVersionFromFile(file);
+        HibernateUtil.saveFileVersionToDb(fileVersion);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString = mapper.writeValueAsString(fileVersion);
+
+        return getResponse(jsonInString);
     }
 
     @GET
