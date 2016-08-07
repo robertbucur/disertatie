@@ -23,7 +23,10 @@ public class HibernateUtil {
     }
 
     public static Session getSession() {
-        return sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
+        session.flush();
+        session.clear();
+        return session;
     }
 
     public static void saveFileToDb(CTXEFile file) {
@@ -91,7 +94,7 @@ public class HibernateUtil {
         Session session = getSession();
         session.beginTransaction();
 
-        Query query = session.createQuery("select max(ctxfv.versionNumber) from CTXEFile ctxf join CTXEFileVersion ctxfv on ctxf.id = ctxfv.fileId where ctxf =:fileId")
+        Query query = session.createQuery("select max(versionNumber) from CTXEFileVersion where fileId=:fileId")
                 .setInteger("fileId", fileId);
         int nextVersionNumber = (Integer) query.uniqueResult();
 

@@ -10,11 +10,11 @@
     <link rel="stylesheet" type="text/css" href="uploadsection/css/style.css"/>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/mobile.css">
-    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
     <script type='text/javascript' src='js/mobile.js'></script>
     <script type='text/javascript' src='js/jquery-3.0.0.js'></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <script type='text/javascript' src="js/jquery-1.11.1.js"></script>
+    <script type='text/javascript' src="js/jquery-1.11.1-ui.min.js"></script>
     <!-- JavaScript Includes -->
     <script src="uploadsection/js/jquery.knob.js"></script>
     <!-- jQuery CTXEFile Upload Dependencies -->
@@ -167,6 +167,8 @@
 
         // Action on selecting something else from files dropdown
         $(document).on('change','#selectParentFile',function(){
+            $("#textzone").val("")
+            clearInterval(intervalTextChanges);
             $('#saveNewVersionButton').prop('disabled', true);
             // clear the version select
             $('#selectFileVersion')
@@ -183,8 +185,6 @@
                     }).attr("timestamp", val["creationDate"]));
                 });
             });
-            $("#textzone").val("")
-            clearInterval(intervalTextChanges);
         });
 
         // Action on selecting something else from files versions dropdown
@@ -215,13 +215,14 @@
         function saveVersionFormSubmit(){
             var fileId = $( "#selectParentFile option:selected" ).val();
             var fileName = $( "#selectParentFile option:selected" ).text();
-            var fileContent = $("#texzone").val();
+            var fileContent = $("#textzone").val();
             $.ajax({
                 url:serviceHost + '/saveVersion',
                 type:'post',
                 data:[{name: "fileIdVersioning", value: fileId},
                     {name: "fileNameVersioning", value: fileName},
-                    {name: "fileContent", value: fileContent}],
+                    {name: "fileContent", value: fileContent},
+                    {name: "fileContent", value: localStorage['username']}],
             });
         }
 

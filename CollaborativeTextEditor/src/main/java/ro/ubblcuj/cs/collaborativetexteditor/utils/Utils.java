@@ -4,6 +4,8 @@ import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFile;
 import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFileChange;
 import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFileVersion;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.List;
 
 public class Utils {
@@ -32,5 +34,11 @@ public class Utils {
         fileVersion.setFileNameComposed(file.getName());
 
         return fileVersion;
+    }
+
+    public static String getUniqueIdentifier() {
+        SecureRandom random = new SecureRandom();
+
+        return new BigInteger(130, random).toString(32);
     }
 }

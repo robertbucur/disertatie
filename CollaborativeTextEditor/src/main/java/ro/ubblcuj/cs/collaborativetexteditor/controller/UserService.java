@@ -49,11 +49,17 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response saveFileVersion(@FormParam("fileIdVersioning") Integer fileId,
                                     @FormParam("fileNameVersioning") String fileName,
+                                    @FormParam("author") String author,
                                     @FormParam("fileContent") String fileContent) throws IOException {
 
-
+        if(author == null) { author = "";}
         int nextVersion = HibernateUtil.getNextVersionNumber(fileId);
-        File file = new java.io.File(fileName + nextVersion + ".txt");
+        String uniqueIdentifier = Utils.getUniqueIdentifier().substring(0,9);
+        int p = fileName.lastIndexOf(".");
+        String trimedFileName = fileName.substring(0, p);
+        String updatedText = fileContent.replaceAll("\n", System.getProperty("line.separator"));
+
+        File file = new java.io.File(Utils.SERVER_UPLOAD_LOCATION_FOLDER + trimedFileName + nextVersion + ".txt");
 
         if (file.createNewFile()) {
             System.out.println("CTXEFileVersion is created!");
@@ -63,6 +69,16 @@ public class UserService {
         } else {
             System.out.println("CTXEFileVersion already exists.");
         }
+
+        CTXEFileVersion fileVersion = new CTXEFileVersion();
+        fileVersion.setFileNameComposed(file.getName());
+        fileVersion.setVersionNumber(nextVersion);
+        fileVersion.setAuthor(author);
+        fileVersion.setCreationDate(new Date().getTime());
+        fileVersion.setFileId(fileId);
+        fileVersion.setIdentifier(uniqueIdentifier);
+
+        HibernateUtil.saveFileVersionToDb(fileVersion);
 
         return getResponse(fileName + fileId + nextVersion);
     }
