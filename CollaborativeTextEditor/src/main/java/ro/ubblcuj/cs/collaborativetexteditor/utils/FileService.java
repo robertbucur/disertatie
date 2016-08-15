@@ -40,4 +40,12 @@ public class FileService {
             System.out.println("CTXEFile already exists.");
         }
     }
+
+    public static void deleteFileFromServer(String fileName) throws IOException {
+        File file = new File(fileName);
+
+        if (file.exists()) {
+            file.delete();
+        }
+    }
 }

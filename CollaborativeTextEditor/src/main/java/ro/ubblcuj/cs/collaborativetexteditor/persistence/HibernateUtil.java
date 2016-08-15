@@ -49,6 +49,18 @@ public class HibernateUtil {
         session.close();
     }
 
+    public static void deleteFileVersionFromDb(String fileName) {
+        Session session = getSession();
+        session.beginTransaction();
+
+        Query query = session.createQuery("delete CTXEFileVersion where fileNameComposed =:fileNameComposed")
+                .setString("fileNameComposed", fileName);
+        query.executeUpdate();
+        session.getTransaction().commit();
+
+        session.close();
+    }
+
     public static List<CTXEFile> getAllFiles(){
         Session session = getSession();
         session.beginTransaction();

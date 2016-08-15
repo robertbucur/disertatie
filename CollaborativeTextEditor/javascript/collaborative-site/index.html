@@ -29,7 +29,7 @@
         var serviceHost = host + "/CollaborativeTextEditor/rest/service";
 
         var currentFileIdentifier = null;
-        var lastUpdate = "1469912400000";
+        var lastUpdate = null;
         var params = getSearchParameters();
         var intervalTextChanges = null;
         var fileVersionTemporaryName = null;
@@ -139,7 +139,7 @@
             }
         }
 
-        // Action on getting the a name when someone enters
+        // Action on getting the name when someone enters
         $(function () {
             if (localStorage['username'] = $("#nameFromDialog").val() != null) {
                 $("#nameDialog").dialog({
@@ -178,13 +178,16 @@
         // Action on selecting something else from files dropdown
         $(document).on('change','#selectParentFile',function(){
             clearInterval(intervalTextChanges);
-            $("#textzone").val("")
+            $("#textzone").val("");
             $('#saveNewVersionButton').prop('disabled', true);
+            $('#deleteVersionButton').prop('disabled', true);
             // clear the version select
             $('#selectFileVersion')
                     .empty()
                     .append("<option selected disabled hidden style='display: none' value=''>Select your option</option>");
-
+            getAllVersions();
+        });
+        function getAllVersions(){
             var url = serviceHost + "/allVersions/";
             url = url + $( "#selectParentFile option:selected" ).val();
             $.getJSON(url, function( data ) {
@@ -193,15 +196,17 @@
                         value: val["id"],
                         text: val["fileNameComposed"]
                     }).attr("timestamp", val["creationDate"])
-                        .attr("identifier", val["identifier"]));
+                            .attr("identifier", val["identifier"]));
                 });
             });
-        });
+        }
 
         // Action on selecting something else from files versions dropdown
         $(document).on('change','#selectFileVersion',function(){
             currentFileIdentifier = $("option:selected", this).attr("identifier");
+            lastUpdate = $("option:selected", this).attr("timestamp");
             $('#saveNewVersionButton').prop('disabled', false);
+            $('#deleteVersionButton').prop('disabled', false);
             var url = serviceHost + "/getFile/";
             var selectedValue = $( "#selectFileVersion option:selected" ).text();
             if (selectedValue == "") {
@@ -213,14 +218,19 @@
                 type: 'GET',
                 success: function (data) {
                     $("#textzone").val(data.toString());
-                    var shareLink = window.location.pathname + "?identifier=" + currentFileIdentifier;
+                    var shareLink = window.location.href;
+                    if (shareLink.indexOf("username") < 0) {
+                        shareLink = shareLink + "?identifier=" + currentFileIdentifier;
+                    }
                     $("#shareLink").attr("href", shareLink);
                     $("#shareLink").text(shareLink);
+
                 },
                 error: function (xhr) {
                     console.log(xhr);
                 }
             });
+            textareaUpdate();
             // start cicle for retrieving updates for textarea
             intervalTextChanges = setInterval(textareaUpdate, 4000);
             setCaretPosition('textzone', 0);
@@ -238,7 +248,16 @@
                     {name: "fileNameVersioning", value: fileName},
                     {name: "fileContent", value: fileContent},
                     {name: "fileContent", value: localStorage['username']}],
+                success: function (data) {
+                    $('#selectFileVersion').append($('<option>', {
+                        value: data["id"],
+                        text: data["fileNameComposed"]
+                    }).attr("timestamp", data["creationDate"])
+                            .attr("identifier", data["identifier"]));
+                    $("#selectFileVersion option:last").attr("selected","selected");
+                }
             });
+
             alert("File Version successfully saved!");
         }
 
@@ -270,7 +289,46 @@
         });
 
         function deleteFileVersion() {
-            alert("delete");
+            var fileVersion = $('#selectFileVersion option:selected').text();
+            alert(fileVersion);
+            $('<div></div>').appendTo('body')
+                    .html('<div><h6>Are you sure?</h6></div>')
+                    .dialog({
+                        modal: true,
+                        title: 'Delete file version',
+                        zIndex: 10000,
+                        autoOpen: true,
+                        width: 'auto',
+                        resizable: false,
+                        buttons: {
+                            Yes: function () {
+                                $.ajax({
+                                    url:serviceHost + '/deleteFileVersion',
+                                    type:'post',
+                                    data:[{name: "fileVersionName", value: fileVersion}],
+                                    dataType: 'json',
+                                    success: function () {
+                                        clearInterval(intervalTextChanges);
+                                        var index = $('#selectFileVersion').get(0).selectedIndex;
+                                        $('#selectFileVersion option:eq(' + index + ')').remove();
+                                        setCaretPosition('textzone', 0);
+                                        $('#textzone').val("");
+                                        alert("File deleted!");
+                                    },
+                                    error: function () {
+                                        alert("ERROR: File could not be deleted!");
+                                    }
+                                });
+                                $(this).dialog("close");
+                            },
+                            No: function () {
+                                $(this).dialog("close");
+                            }
+                        },
+                        close: function (event, ui) {
+                            $(this).remove();
+                        }
+                    });
         }
         function saveNewFile() {
             var fileName = $("#newFileName").val();
@@ -284,11 +342,12 @@
                         {name: "author", value: localStorage['username']}],
                     dataType: 'json',
                     success: function (data) {
-                        var shareLink = window.location.pathname + "?identifier=" + data["identifier"];
+                        var shareLink = window.location.href + "?identifier=" + data["identifier"];
                         $("#shareLink").attr("href", shareLink);
                         $("#shareLink").text(shareLink);
                         currentFileIdentifier = data["identifier"];
                         alert("File Created!");
+                        alert(shareLink);
                         window.location.replace(shareLink + "&username=" + localStorage['username']);
                     },
                     error: function () {

@@ -11,6 +11,7 @@ import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFileVersion;
 import ro.ubblcuj.cs.collaborativetexteditor.persistence.HibernateUtil;
 import ro.ubblcuj.cs.collaborativetexteditor.utils.FileService;
 import ro.ubblcuj.cs.collaborativetexteditor.utils.Utils;
+import sun.security.provider.certpath.OCSPResponse;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -64,7 +65,10 @@ public class UserService {
 
         HibernateUtil.saveFileVersionToDb(fileVersion);
 
-        return getResponse(fileName + fileId + nextVersion);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString = mapper.writeValueAsString(fileVersion);
+
+        return getResponse(jsonInString);
     }
 
     @POST
@@ -172,6 +176,9 @@ public class UserService {
     public Response saveNewFile(@FormParam("fileName") String fileName,
                               @FormParam("author") String author) throws IOException, ParseException {
 
+        if(!fileName.contains(".txt")) {
+            fileName = fileName + ".txt";
+        }
         String filePath = Utils.SERVER_UPLOAD_LOCATION_FOLDER + fileName;
         CTXEFile file = new CTXEFile();
         file.setLastEditor(author);
@@ -187,6 +194,24 @@ public class UserService {
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(fileVersion);
+
+        return getResponse(jsonInString);
+    }
+
+    @POST
+    @Path("/deleteFileVersion")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteFileVersion(@FormParam("fileVersionName") String fileName) throws IOException, ParseException {
+
+        String filePath = Utils.SERVER_UPLOAD_LOCATION_FOLDER + fileName;
+
+        // save the file to the server and DB
+        FileService.deleteFileFromServer(filePath);
+
+        HibernateUtil.deleteFileVersionFromDb(fileName);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString = mapper.writeValueAsString(fileName);
 
         return getResponse(jsonInString);
     }
