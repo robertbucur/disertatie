@@ -25,9 +25,12 @@
     <script src="uploadsection/js/script.js"></script>
 
     <script language="javascript" type="text/javascript">
+        //var host = "http://192.168.137.112:8080"
         var host = "http://localhost:8080";
         var serviceHost = host + "/CollaborativeTextEditor/rest/service";
 
+        var intervaTimeChanges = 3000;
+        var intervalTimeUpdates = 8000;
         var currentFileIdentifier = null;
         var lastUpdate = null;
         var lastUpdateFilesSelect = null;
@@ -191,12 +194,12 @@
                     });
                 }
             });
-            intervalFilesUpdate = setInterval(updateFileSelect, 5000);
-            intervalFileVersionsUpdate = setInterval(updateFileVersionSelect, 5000);
         });
 
         // Action on selecting something else from files dropdown
-        $(document).on('change','#selectParentFile',function(){
+        $(document).on('change','#selectParentFile',function() {
+            intervalFilesUpdate = setInterval(updateFileSelect, intervalTimeUpdates);
+            intervalFileVersionsUpdate = setInterval(updateFileVersionSelect, intervalTimeUpdates);
             clearInterval(intervalTextChanges);
             $("#textzone").val("");
             $('#saveNewVersionButton').prop('disabled', true);
@@ -250,7 +253,8 @@
             });
             textareaUpdate();
             // start cicle for retrieving updates for textarea
-            intervalTextChanges = setInterval(textareaUpdate, 4000);
+            intervalTextChanges = setInterval(textareaUpdate, intervaTimeChanges);
+            intervalFileVersionsUpdate = setInterval(updateFileVersionSelect, 5000);
             setCaretPosition('textzone', 0);
         });
 
