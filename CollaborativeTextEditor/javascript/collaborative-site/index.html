@@ -30,13 +30,18 @@
 
         var currentFileIdentifier = null;
         var lastUpdate = null;
+        var lastUpdateFilesSelect = null;
+        var lastUpdateFileVersionsSelect = null;
         var params = getSearchParameters();
         var intervalTextChanges = null;
+        var intervalFilesUpdate = null;
+        var intervalFileVersionsUpdate = null;
         var fileVersionTemporaryName = null;
+        var username = null;
         function handleNameSubmitted() {
             $('#nameDialog').dialog('close');
-            localStorage['username'] = $("#nameFromDialog").val();
-            $('#usernameToBeSent').val(localStorage['username']);
+            username = $("#nameFromDialog").val();
+            $('#usernameToBeSent').val(username);
         }
 
         function handleFileNameSubmitted() {
@@ -60,7 +65,7 @@
                         {name: "charColumn", value: 0},
                         {name: "charRow", value: 0},
                         {name: "charPosition", value: charPosition},
-                        {name: "author", value: localStorage['username']},
+                        {name: "author", value: username},
                         {name: "lastUpdate", value: lastUpdate}],
                 });
             }
@@ -76,7 +81,7 @@
                     data: [{name: "fileId", value: fileId},
                         {name: "fileVersionId", value: fileVersionId},
                         {name: "lastUpdate", value: lastUpdate},
-                        {name: "author", value: localStorage['username']}],
+                        {name: "author", value: username}],
                     dataType: 'json',
                     success: function (data) {
                         $.each(data["changes"], function (key, value) {
@@ -141,7 +146,7 @@
 
         // Action on getting the name when someone enters
         $(function () {
-            if (localStorage['username'] = $("#nameFromDialog").val() != null) {
+            if (username = $("#nameFromDialog").val() != null) {
                 $("#nameDialog").dialog({
                     closeOnEscape: false,
                     modal: true,
@@ -154,12 +159,26 @@
 
         // incarcare select cu nume fisiere disponibile
         $( document ).ready(function() {
+            if(username == null) {
+                username = params.username;
+            }
+            $(document).ready(function () {
+                if(window.location.href.indexOf("username") > -1) {
+                    $(".ui-dialog").hide();
+                    $(".ui-widget-overlay").hide();
+                }
+            })
             $.getJSON(serviceHost + "/allFiles", function (data) {
                 $.each(data, function (key, val) {
                     $('#selectParentFile').append($('<option>', {
                         value: val["id"],
                         text: val["name"]
                     }));
+                    if(lastUpdateFilesSelect == null) {
+                        lastUpdateFilesSelect = val["lastModified"];
+                    } else if (lastUpdateFilesSelect < val["lastModified"]) {
+                        lastUpdateFilesSelect = val["lastModified"];
+                    }
                 });
                 if (params.identifier != null) {
                     var urlDetails = "/details/" + params.identifier;
@@ -172,7 +191,8 @@
                     });
                 }
             });
-
+            intervalFilesUpdate = setInterval(updateFileSelect, 5000);
+            intervalFileVersionsUpdate = setInterval(updateFileVersionSelect, 5000);
         });
 
         // Action on selecting something else from files dropdown
@@ -218,10 +238,8 @@
                 type: 'GET',
                 success: function (data) {
                     $("#textzone").val(data.toString());
-                    var shareLink = window.location.href;
-                    if (shareLink.indexOf("username") < 0) {
-                        shareLink = shareLink + "?identifier=" + currentFileIdentifier;
-                    }
+                    var shareLink = location.protocol + '//' + location.host + location.pathname;
+                    shareLink = shareLink + "?identifier=" + currentFileIdentifier;
                     $("#shareLink").attr("href", shareLink);
                     $("#shareLink").text(shareLink);
 
@@ -247,7 +265,7 @@
                 data:[{name: "fileIdVersioning", value: fileId},
                     {name: "fileNameVersioning", value: fileName},
                     {name: "fileContent", value: fileContent},
-                    {name: "fileContent", value: localStorage['username']}],
+                    {name: "fileContent", value: username}],
                 success: function (data) {
                     $('#selectFileVersion').append($('<option>', {
                         value: data["id"],
@@ -339,16 +357,16 @@
                     url:serviceHost + '/newFile',
                     type:'post',
                     data:[{name: "fileName", value: fileName},
-                        {name: "author", value: localStorage['username']}],
+                        {name: "author", value: username}],
                     dataType: 'json',
                     success: function (data) {
-                        var shareLink = window.location.href + "?identifier=" + data["identifier"];
+                        var shareLink = location.protocol + '//' + location.host + location.pathname + "?identifier=" + data["identifier"];
                         $("#shareLink").attr("href", shareLink);
                         $("#shareLink").text(shareLink);
                         currentFileIdentifier = data["identifier"];
+                        alert(currentFileIdentifier);
                         alert("File Created!");
-                        alert(shareLink);
-                        window.location.replace(shareLink + "&username=" + localStorage['username']);
+                        window.location.replace(shareLink + "&username=" + username);
                     },
                     error: function () {
                         alert("ERROR: File could not be created!");
@@ -356,6 +374,42 @@
                     }
                 });
             }
+        }
+
+        // update the list with files
+        function updateFileSelect(){
+            $.ajax({
+                url:serviceHost + '/updateAllFiles',
+                type:'post',
+                data:[{name: "lastUpdate", value: lastUpdateFilesSelect}],
+                success: function (data) {
+                    $.each(data, function (key, val) {
+                        $('#selectParentFile').append($('<option>', {
+                            value: val["id"],
+                            text: val["name"]
+                        }));
+                        lastUpdateFilesSelect = val["lastModified"];
+                    });
+                }
+            });
+        }
+
+        function updateFileVersionSelect(){
+            $.ajax({
+                url:serviceHost + '/updateAllFileVersions',
+                type:'post',
+                data:[{name: "lastUpdate", value: lastUpdateFileVersionsSelect,
+                name: "fileId", value: $( "#selectParentFile option:selected" ).val()}],
+                success: function (data) {
+                    $.each(data, function (key, val) {
+                        $('#selectParentFile').append($('<option>', {
+                            value: val["id"],
+                            text: val["name"]
+                        }));
+                        lastUpdateFilesSelect = val["creationDate"];
+                    });
+                }
+            });
         }
     </script>
 

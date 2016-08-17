@@ -132,6 +132,31 @@ public class UserService {
         return getResponse(jsonInString);
     }
 
+    @POST
+    @Path("/updateAllFiles")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUpdateAllFiles(@FormParam("lastUpdate") long lastUpdate) throws IOException {
+        List<CTXEFile> files = HibernateUtil.getUpdateAllFiles(lastUpdate);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString = mapper.writeValueAsString(files);
+
+        return getResponse(jsonInString);
+    }
+
+    @POST
+    @Path("/updateAllFileVersions")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUpdateAllFileVersions(@FormParam("lastUpdate") long lastUpdate,
+                                             @FormParam("fileId") Integer fileId) throws IOException {
+        List<CTXEFileVersion> fileVersions = HibernateUtil.getUpdateAllVersionsForFile(lastUpdate, fileId);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString = mapper.writeValueAsString(fileVersions);
+
+        return getResponse(jsonInString);
+    }
+
     @GET
     @Path("/allVersions/{fileId}")
     @Produces(MediaType.APPLICATION_JSON)

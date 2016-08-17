@@ -73,6 +73,19 @@ public class HibernateUtil {
         return files;
     }
 
+    public static List<CTXEFile> getUpdateAllFiles(long lastUpdate){
+        Session session = getSession();
+        session.beginTransaction();
+
+        List<CTXEFile> files;
+        Query query = session.createQuery("from CTXEFile where lastModified>:lastModified order by lastModified asc")
+                .setLong("lastModified", lastUpdate);
+        files = query.list();
+
+        session.close();
+        return files;
+    }
+
     public static List<CTXEFileChange> getAllChangesForFile(int fileId, int fileVersionId, long lastUpdate, String author){
         Session session = getSession();
         session.beginTransaction();
@@ -96,6 +109,20 @@ public class HibernateUtil {
         List<CTXEFileVersion> files;
         Query query = session.createQuery("from CTXEFileVersion where fileId=:fileId")
                 .setInteger("fileId", fileId);
+        files = query.list();
+
+        session.close();
+        return files;
+    }
+
+    public static List<CTXEFileVersion> getUpdateAllVersionsForFile (long lastUpdate, int fileId) {
+        Session session = getSession();
+        session.beginTransaction();
+
+        List<CTXEFileVersion> files;
+        Query query = session.createQuery("from CTXEFileVersion where fileId=:fileId and creationDate>:lastUpdate order by creationDate asc")
+                .setInteger("fileId", fileId)
+                .setLong("lastUpdate", lastUpdate);
         files = query.list();
 
         session.close();
