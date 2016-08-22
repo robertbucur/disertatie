@@ -204,6 +204,7 @@
             $("#textzone").val("");
             $('#saveNewVersionButton').prop('disabled', true);
             $('#deleteVersionButton').prop('disabled', true);
+            $('#downloadVersionButton').prop('disabled', true);
             // clear the version select
             $('#selectFileVersion')
                     .empty()
@@ -230,6 +231,7 @@
             lastUpdate = $("option:selected", this).attr("timestamp");
             $('#saveNewVersionButton').prop('disabled', false);
             $('#deleteVersionButton').prop('disabled', false);
+            $('#downloadVersionButton').prop('disabled', false);
             var url = serviceHost + "/getFile/";
             var selectedValue = $( "#selectFileVersion option:selected" ).text();
             if (selectedValue == "") {
@@ -303,16 +305,41 @@
                 $("#nameFromDialog").val(params.username);
             }
             $("#deleteVersionButton").click(function () {
-                deleteFileVersion()
+                deleteFileVersion();
             });
             $("#saveNewFileButton").click(function () {
-                saveNewFile()
+                saveNewFile();
+            });
+            $("#downloadVersionButton").click(function () {
+                downloadFile();
             });
         });
 
+        function downloadFile() {
+            var fileVersion = $('#selectFileVersion option:selected').text();
+            $.ajax({
+                url: serviceHost + '/download/' + fileVersion,
+                type: 'GET',
+                success: function (data) {
+                    var element = document.createElement('a');
+                    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(data));
+                    element.setAttribute('download', fileVersion);
+
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
+
+                    element.click();
+
+                    document.body.removeChild(element);
+                },
+                error: function (xhr) {
+                    console.log(xhr);
+                }
+            });
+        }
+
         function deleteFileVersion() {
             var fileVersion = $('#selectFileVersion option:selected').text();
-            alert(fileVersion);
             $('<div></div>').appendTo('body')
                     .html('<div><h6>Are you sure?</h6></div>')
                     .dialog({
@@ -452,6 +479,7 @@
                 <option selected disabled hidden style='display: none' value=''>Select your option</option>
             </select>
             <br><br><br>
+            <input id="downloadVersionButton" type="button" value="Download File Version" />
             <input id="deleteVersionButton" type="button" value="Delete File Version" />
             <br><br>
             <p>Create new file:</p>

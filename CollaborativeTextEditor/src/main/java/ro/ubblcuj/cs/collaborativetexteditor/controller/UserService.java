@@ -16,7 +16,10 @@ import sun.security.provider.certpath.OCSPResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -260,6 +263,16 @@ public class UserService {
         String jsonInString = mapper.writeValueAsString(details);
 
         return getResponse(jsonInString);
+    }
+
+    @GET
+    @Path("/download/{fileName}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response downloadFile(@PathParam("fileName") final String fileName) {
+        File file = new File(Utils.SERVER_UPLOAD_LOCATION_FOLDER + fileName);
+        return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
+                .header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"" ) //optional
+                .build();
     }
 
     private Response getResponse(String json) {
