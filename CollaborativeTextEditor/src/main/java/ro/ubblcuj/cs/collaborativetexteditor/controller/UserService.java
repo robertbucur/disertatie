@@ -3,25 +3,18 @@ package ro.ubblcuj.cs.collaborativetexteditor.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFile;
 import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFileChange;
 import ro.ubblcuj.cs.collaborativetexteditor.model.CTXEFileVersion;
-import ro.ubblcuj.cs.collaborativetexteditor.persistence.HibernateUtil;
+import ro.ubblcuj.cs.collaborativetexteditor.persistence.PersistenceUtils;
 import ro.ubblcuj.cs.collaborativetexteditor.utils.FileService;
 import ro.ubblcuj.cs.collaborativetexteditor.utils.Utils;
-import sun.security.provider.certpath.OCSPResponse;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +32,7 @@ public class UserService {
 
         if(author == null) { author = "";}
         String fullFileName;
-        int nextVersion = HibernateUtil.getNextVersionNumber(fileId);
+        int nextVersion = PersistenceUtils.getNextVersionNumber(fileId);
         String uniqueIdentifier = Utils.getUniqueIdentifier().substring(0,9);
         int p = fileName.lastIndexOf(".");
         if (p >= 0){
@@ -66,7 +59,7 @@ public class UserService {
         fileVersion.setFileId(fileId);
         fileVersion.setIdentifier(uniqueIdentifier);
 
-        HibernateUtil.saveFileVersionToDb(fileVersion);
+        PersistenceUtils.saveFileVersionToDb(fileVersion);
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(fileVersion);
@@ -96,11 +89,11 @@ public class UserService {
         fileChange.setCharValue(charValue);
         fileChange.setAuthor(author);
 
-        List<CTXEFileChange> fileChanges = HibernateUtil.getAllChangesForFile(fileId, fileVersionId, lastUpdate, author);
+        List<CTXEFileChange> fileChanges = PersistenceUtils.getAllChangesForFile(fileId, fileVersionId, lastUpdate, author);
 
         Utils.applyOperationalTransformationOnChange(fileChanges, fileChange);
 
-        HibernateUtil.insertFileChange(fileChange);
+        PersistenceUtils.insertFileChange(fileChange);
 
         return getResponse(null);
     }
@@ -112,14 +105,17 @@ public class UserService {
                                       @FormParam("fileVersionId") Integer fileVersionId,
                                       @FormParam("lastUpdate") long lastUpdate,
                                       @FormParam("author") String author) throws IOException, ParseException {
+        if (fileVersionId == null) {
+            return getResponse(null);
+        } else {
+            List<CTXEFileChange> changes = PersistenceUtils.getAllChangesForFile(fileId, fileVersionId, lastUpdate, author);
 
-        List<CTXEFileChange> changes = HibernateUtil.getAllChangesForFile(fileId, fileVersionId, lastUpdate, author);
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonInString = mapper.writeValueAsString(changes);
+            jsonInString = "{\"changes\":" + jsonInString + "}";
 
-        ObjectMapper mapper = new ObjectMapper();
-        String jsonInString = mapper.writeValueAsString(changes);
-        jsonInString = "{\"changes\":" + jsonInString +"}";
-
-        return getResponse(jsonInString);
+            return getResponse(jsonInString);
+        }
     }
 
     // FUNCTIONAL
@@ -127,7 +123,7 @@ public class UserService {
     @Path("/allFiles")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllFiles() throws IOException {
-        List<CTXEFile> files = HibernateUtil.getAllFiles();
+        List<CTXEFile> files = PersistenceUtils.getAllFiles();
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(files);
@@ -139,7 +135,7 @@ public class UserService {
     @Path("/updateAllFiles")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUpdateAllFiles(@FormParam("lastUpdate") long lastUpdate) throws IOException {
-        List<CTXEFile> files = HibernateUtil.getUpdateAllFiles(lastUpdate);
+        List<CTXEFile> files = PersistenceUtils.getUpdateAllFiles(lastUpdate);
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(files);
@@ -152,7 +148,7 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUpdateAllFileVersions(@FormParam("lastUpdate") long lastUpdate,
                                              @FormParam("fileId") Integer fileId) throws IOException {
-        List<CTXEFileVersion> fileVersions = HibernateUtil.getUpdateAllVersionsForFile(lastUpdate, fileId);
+        List<CTXEFileVersion> fileVersions = PersistenceUtils.getUpdateAllVersionsForFile(lastUpdate, fileId);
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(fileVersions);
@@ -164,7 +160,7 @@ public class UserService {
     @Path("/allVersions/{fileId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllFileVersions(@PathParam("fileId") Integer fileId) throws IOException {
-        List<CTXEFileVersion> fileVersions = HibernateUtil.getAllVersionsForFile(fileId);
+        List<CTXEFileVersion> fileVersions = PersistenceUtils.getAllVersionsForFile(fileId);
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(fileVersions);
@@ -190,10 +186,10 @@ public class UserService {
 
         // save the file to the server and DB
         FileService.saveFileToServer(fileInputStream, filePath);
-        HibernateUtil.saveFileToDb(file);
+        PersistenceUtils.saveFileToDb(file);
 
         CTXEFileVersion fileVersion = Utils.getFileVersionFromFile(file);
-        HibernateUtil.saveFileVersionToDb(fileVersion);
+        PersistenceUtils.saveFileVersionToDb(fileVersion);
 
         return Response.status(Response.Status.OK).build();
     }
@@ -215,10 +211,10 @@ public class UserService {
 
         // save the file to the server and DB
         FileService.createNewFileToServer(filePath);
-        HibernateUtil.saveFileToDb(file);
+        PersistenceUtils.saveFileToDb(file);
 
         CTXEFileVersion fileVersion = Utils.getFileVersionFromFile(file);
-        HibernateUtil.saveFileVersionToDb(fileVersion);
+        PersistenceUtils.saveFileVersionToDb(fileVersion);
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(fileVersion);
@@ -236,7 +232,7 @@ public class UserService {
         // save the file to the server and DB
         FileService.deleteFileFromServer(filePath);
 
-        HibernateUtil.deleteFileVersionFromDb(fileName);
+        PersistenceUtils.deleteFileVersionFromDb(fileName);
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(fileName);
@@ -258,7 +254,7 @@ public class UserService {
     @Path("/details/{identifier}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDetailsBasedOnIdentifier(@PathParam("identifier") String identifier) throws IOException {
-        CTXEFileVersion details = HibernateUtil.getIdentifierDetails(identifier);
+        CTXEFileVersion details = PersistenceUtils.getIdentifierDetails(identifier);
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(details);
 

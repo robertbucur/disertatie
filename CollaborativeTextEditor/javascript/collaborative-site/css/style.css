@@ -124,7 +124,7 @@ p a:hover {
 	max-width: 880px;
 	min-height: 640px;
 	overflow: hidden;
-	padding: 45px 40px 46px;
+	padding: 10px 40px 50px;
 }
 #body > h2 {
 	color: #21a51e;

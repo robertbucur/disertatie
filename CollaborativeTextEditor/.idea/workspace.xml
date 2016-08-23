@@ -7,7 +7,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f2faa83-c0b7-4086-bb88-dd9f7595b62a" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/artifacts/CollaborativeTextEditor/WEB-INF/classes/ro/ubblcuj/cs/collaborativetexteditor/persistence/HibernateUtil.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/ro/ubblcuj/cs/collaborativetexteditor/persistence/HibernateUtil.class" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/persistence/HibernateUtil.java" afterPath="$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/persistence/PersistenceUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/CollaborativeTextEditor/WEB-INF/classes/ro/ubblcuj/cs/collaborativetexteditor/controller/UserService.class" afterPath="$PROJECT_DIR$/out/artifacts/CollaborativeTextEditor/WEB-INF/classes/ro/ubblcuj/cs/collaborativetexteditor/controller/UserService.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/ro/ubblcuj/cs/collaborativetexteditor/controller/UserService.class" afterPath="$PROJECT_DIR$/target/classes/ro/ubblcuj/cs/collaborativetexteditor/controller/UserService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/collaborative-site/css/style.css" afterPath="$PROJECT_DIR$/javascript/collaborative-site/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript/collaborative-site/index.html" afterPath="$PROJECT_DIR$/javascript/collaborative-site/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/controller/UserService.java" afterPath="$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/controller/UserService.java" />
     </list>
@@ -43,37 +49,43 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/javascript/collaborative-site/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="331" column="0" selection-start-line="331" selection-start-column="0" selection-end-line="331" selection-end-column="0" />
+            <state relative-caret-position="166">
+              <caret line="441" column="36" selection-start-line="441" selection-start-column="36" selection-end-line="441" selection-end-column="36" />
               <folding>
                 <element signature="n#style#0;n#option#0;n#select#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#option#0;n#select#1;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <marker date="1471880287247" expanded="true" signature="9684:9697" ph="..." />
+                <marker date="1471987902161" expanded="true" signature="9730:9743" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HibernateUtil.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/persistence/HibernateUtil.java">
+      <file leaf-file-name="css.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/javascript/collaborative-site/css/css.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1190">
-              <caret line="80" column="115" selection-start-line="80" selection-start-column="115" selection-end-line="80" selection-end-column="115" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Utils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/utils/Utils.java">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/javascript/collaborative-site/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="28" column="77" selection-start-line="28" selection-start-column="77" selection-end-line="28" selection-end-column="77" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+            <state relative-caret-position="210">
+              <caret line="126" column="25" selection-start-line="126" selection-start-column="25" selection-end-line="126" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PersistenceUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/persistence/PersistenceUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="227">
+              <caret line="122" column="0" selection-start-line="122" selection-start-column="0" selection-end-line="122" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -81,8 +93,38 @@
       <file leaf-file-name="UserService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/controller/UserService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="274" column="25" selection-start-line="274" selection-start-column="25" selection-end-line="274" selection-end-column="25" />
+            <state relative-caret-position="259">
+              <caret line="155" column="0" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ResourceMethodInvocationHandlerFactory.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/bundles/jaxrs-ri/2.23/jaxrs-ri-2.23.jar!/org/glassfish/jersey/server/model/internal/ResourceMethodInvocationHandlerFactory.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="275">
+              <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MediaType.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/bundles/jaxrs-ri/2.23/jaxrs-ri-2.23.jar!/javax/ws/rs/core/MediaType.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="156">
+              <caret line="34" column="41" selection-start-line="34" selection-start-column="41" selection-end-line="34" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PathParam.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/bundles/jaxrs-ri/2.23/jaxrs-ri-2.23.jar!/javax/ws/rs/PathParam.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -119,7 +161,7 @@
       <file leaf-file-name="FileService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/utils/FileService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="343">
+            <state relative-caret-position="782">
               <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
               <folding />
             </state>
@@ -171,9 +213,10 @@
         <option value="$PROJECT_DIR$/src/main/resources/CTXEFileVersion.hbm.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
         <option value="$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/utils/Utils.java" />
-        <option value="$PROJECT_DIR$/javascript/collaborative-site/css/style.css" />
         <option value="$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/utils/FileService.java" />
         <option value="$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/persistence/HibernateUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/persistence/PersistenceUtils.java" />
+        <option value="$PROJECT_DIR$/javascript/collaborative-site/css/style.css" />
         <option value="$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/controller/UserService.java" />
         <option value="$PROJECT_DIR$/javascript/collaborative-site/index.html" />
       </list>
@@ -226,47 +269,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CollaborativeTextEditor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CollaborativeTextEditor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CollaborativeTextEditor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CollaborativeTextEditor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CollaborativeTextEditor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javascript" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="collaborative-site" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane />
+      </pane>
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -278,6 +286,22 @@
     <property name="last_opened_file_path" value="C:/Program Files/Git/bin/git.exe" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="113" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="141" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="143" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="817" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="135" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="134" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="135" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="810" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -1510,12 +1534,16 @@
       <workItem from="1471269702984" duration="9235000" />
       <workItem from="1471444937499" duration="5132000" />
       <workItem from="1471459355580" duration="3724000" />
-      <workItem from="1471875341454" duration="4553000" />
+      <workItem from="1471875341454" duration="4687000" />
+      <workItem from="1471882102968" duration="583000" />
+      <workItem from="1471896056959" duration="1626000" />
+      <workItem from="1471966845074" duration="4811000" />
+      <workItem from="1471982328034" duration="4824000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="177153000" />
+    <option name="totallyTimeSpent" value="189131000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="57" y="-8" width="1317" height="784" extended-state="6" />
@@ -1532,9 +1560,9 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.437788" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24980111" sideWeight="0.50864196" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24980111" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24980111" sideWeight="0.491358" order="6" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293556" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1542,7 +1570,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3778802" sideWeight="0.49403343" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3778802" sideWeight="0.49403343" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1565,18 +1593,18 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24980111" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3778802" sideWeight="0.49403343" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3778802" sideWeight="0.49403343" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.437788" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.437788" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24980111" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24980111" sideWeight="0.50864196" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24980111" sideWeight="0.491358" order="6" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1596,7 +1624,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="61" />
+      <option name="time" value="71" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1605,41 +1633,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="750">
-          <caret line="139" column="21" selection-start-line="139" selection-start-column="21" selection-end-line="139" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/4.1.4.Final/hibernate-core-4.1.4.Final.jar!/org/hibernate/SharedSessionContract.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/collaborative-site/uploadsection/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="70" column="13" selection-start-line="70" selection-start-column="13" selection-end-line="70" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/test.html" />
-    <entry file="file://$PROJECT_DIR$/javascript/collaborative-site/images/group-yoga.jpg" />
-    <entry file="file://$PROJECT_DIR$/javascript/collaborative-site/images/icon-facebook.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/javascript/collaborative-site/images/icon-googleplus.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1783,28 +1776,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/utils/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="28" column="77" selection-start-line="28" selection-start-column="77" selection-end-line="28" selection-end-column="77" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/javascript/collaborative-site/upload.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="98">
           <caret line="35" column="65" selection-start-line="35" selection-start-column="64" selection-end-line="35" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javascript/collaborative-site/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="450" column="14" selection-start-line="450" selection-start-column="14" selection-end-line="450" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1843,6 +1818,114 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/bundles/jaxrs-ri/2.23/jaxrs-ri-2.23.jar!/org/glassfish/jersey/internal/AbstractRuntimeDelegate.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/bundles/jaxrs-ri/2.23/jaxrs-ri-2.23.jar!/javax/ws/rs/Path.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_13/src.zip!/java/nio/file/Path.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="97" column="17" selection-start-line="97" selection-start-column="17" selection-end-line="97" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/ro.ubblcuj.cs.collaborativetexteditor.controller.UserService">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>ro.ubblcuj.cs.collaborativetexteditor.controller.UserService</OriginalElement>
+          <nodes>
+            <node x="" y="">javax.ws.rs.Path</node>
+            <node x="" y="">ro.ubblcuj.cs.collaborativetexteditor.controller.UserService</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="46.0" y="54.0" />
+          <SelectedNodes />
+          <Categories />
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/ro.ubblcuj.cs.collaborativetexteditor">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>ro.ubblcuj.cs.collaborativetexteditor</OriginalElement>
+          <nodes>
+            <node x="" y="">ro.ubblcuj.cs.collaborativetexteditor.persistence</node>
+            <node x="" y="">ro.ubblcuj.cs.collaborativetexteditor.model</node>
+            <node x="" y="">ro.ubblcuj.cs.collaborativetexteditor.controller</node>
+            <node x="" y="">ro.ubblcuj.cs.collaborativetexteditor.utils</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="130.0" y="129.0" />
+          <SelectedNodes />
+          <Categories />
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://SpringLocalModels/ro.ubblcuj.cs.collaborativetexteditor.persistence.HibernateUtil">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>SpringLocalModels</ID>
+          <OriginalElement>ro.ubblcuj.cs.collaborativetexteditor.persistence.HibernateUtil</OriginalElement>
+          <nodes>
+            <node x="" y="">ro.ubblcuj.cs.collaborativetexteditor.persistence.HibernateUtil</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="47.0" y="10.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Show filesets as groups</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/ro.ubblcuj.cs.collaborativetexteditor.persistence.HibernateUtil">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>ro.ubblcuj.cs.collaborativetexteditor.persistence.HibernateUtil</OriginalElement>
+          <nodes>
+            <node x="" y="">ro.ubblcuj.cs.collaborativetexteditor.persistence.HibernateUtil</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="51.0" y="15.0" />
+          <SelectedNodes />
+          <Categories />
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/utils/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="28" column="77" selection-start-line="28" selection-start-column="77" selection-end-line="28" selection-end-column="77" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/model/CTXEFile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -1869,35 +1952,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/persistence/HibernateUtil.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/utils/FileService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1190">
-          <caret line="80" column="115" selection-start-line="80" selection-start-column="115" selection-end-line="80" selection-end-column="115" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/bundles/jaxrs-ri/2.23/jaxrs-ri-2.23.jar!/org/glassfish/jersey/internal/AbstractRuntimeDelegate.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-          <folding>
-            <element signature="e#2473#2474#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/bundles/jaxrs-ri/2.23/jaxrs-ri-2.23.jar!/org/glassfish/jersey/server/model/internal/ResourceMethodInvocationHandlerFactory.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+        <state relative-caret-position="782">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/bundles/jaxrs-ri/2.23/jaxrs-ri-2.23.jar!/javax/ws/rs/Path.class">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/bundles/jaxrs-ri/2.23/jaxrs-ri-2.23.jar!/javax/ws/rs/PathParam.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="16" column="18" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
@@ -1905,38 +1968,62 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_13/src.zip!/java/nio/file/Path.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/bundles/jaxrs-ri/2.23/jaxrs-ri-2.23.jar!/javax/ws/rs/core/MediaType.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="97" column="17" selection-start-line="97" selection-start-column="17" selection-end-line="97" selection-end-column="17" />
+        <state relative-caret-position="156">
+          <caret line="34" column="41" selection-start-line="34" selection-start-column="41" selection-end-line="34" selection-end-column="41" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/utils/FileService.java">
+    <entry file="file://$PROJECT_DIR$/javascript/collaborative-site/css/css.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascript/collaborative-site/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="126" column="25" selection-start-line="126" selection-start-column="25" selection-end-line="126" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/bundles/jaxrs-ri/2.23/jaxrs-ri-2.23.jar!/org/glassfish/jersey/server/model/internal/ResourceMethodInvocationHandlerFactory.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/persistence/PersistenceUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="122" column="0" selection-start-line="122" selection-start-column="0" selection-end-line="122" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ro/ubblcuj/cs/collaborativetexteditor/controller/UserService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="274" column="25" selection-start-line="274" selection-start-column="25" selection-end-line="274" selection-end-column="25" />
+        <state relative-caret-position="259">
+          <caret line="155" column="0" selection-start-line="155" selection-start-column="0" selection-end-line="155" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/javascript/collaborative-site/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="331" column="0" selection-start-line="331" selection-start-column="0" selection-end-line="331" selection-end-column="0" />
+        <state relative-caret-position="166">
+          <caret line="441" column="36" selection-start-line="441" selection-start-column="36" selection-end-line="441" selection-end-column="36" />
           <folding>
             <element signature="n#style#0;n#option#0;n#select#0;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#option#0;n#select#1;n#div#2;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <marker date="1471880287247" expanded="true" signature="9684:9697" ph="..." />
+            <marker date="1471987902161" expanded="true" signature="9730:9743" ph="..." />
           </folding>
         </state>
       </provider>

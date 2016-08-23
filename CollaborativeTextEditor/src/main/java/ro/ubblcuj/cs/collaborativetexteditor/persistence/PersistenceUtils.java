@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-public class HibernateUtil {
+public class PersistenceUtils {
 
     private static SessionFactory sessionFactory;
     static {

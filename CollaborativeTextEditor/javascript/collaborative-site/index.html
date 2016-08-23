@@ -198,6 +198,7 @@
 
         // Action on selecting something else from files dropdown
         $(document).on('change','#selectParentFile',function() {
+            lastUpdateFileVersionsSelect = 0;
             intervalFilesUpdate = setInterval(updateFileSelect, intervalTimeUpdates);
             intervalFileVersionsUpdate = setInterval(updateFileVersionSelect, intervalTimeUpdates);
             clearInterval(intervalTextChanges);
@@ -221,6 +222,11 @@
                         text: val["fileNameComposed"]
                     }).attr("timestamp", val["creationDate"])
                             .attr("identifier", val["identifier"]));
+                    if(lastUpdateFileVersionsSelect == null) {
+                        lastUpdateFileVersionsSelect = val["creationDate"];
+                    } else if (lastUpdateFileVersionsSelect < val["creationDate"]) {
+                        lastUpdateFileVersionsSelect = val["creationDate"];
+                    }
                 });
             });
         }
@@ -415,11 +421,13 @@
                 data:[{name: "lastUpdate", value: lastUpdateFilesSelect}],
                 success: function (data) {
                     $.each(data, function (key, val) {
-                        $('#selectParentFile').append($('<option>', {
-                            value: val["id"],
-                            text: val["name"]
-                        }));
-                        lastUpdateFilesSelect = val["lastModified"];
+                            $('#selectParentFile').append($('<option>', {
+                                value: val["id"],
+                                text: val["name"]
+                            }));
+                            if (lastUpdateFilesSelect < val["lastModified"]) {
+                                lastUpdateFilesSelect = val["lastModified"];
+                            }
                     });
                 }
             });
@@ -429,15 +437,17 @@
             $.ajax({
                 url:serviceHost + '/updateAllFileVersions',
                 type:'post',
-                data:[{name: "lastUpdate", value: lastUpdateFileVersionsSelect,
-                name: "fileId", value: $( "#selectParentFile option:selected" ).val()}],
+                data:[{name: "lastUpdate", value: lastUpdateFileVersionsSelect},
+                    {name: "fileId", value: $( "#selectParentFile option:selected" ).val()}],
                 success: function (data) {
                     $.each(data, function (key, val) {
-                        $('#selectParentFile').append($('<option>', {
+                        $('#selectFileVersion').append($('<option>', {
                             value: val["id"],
-                            text: val["name"]
+                            text: val["fileNameComposed"]
                         }));
-                        lastUpdateFilesSelect = val["creationDate"];
+                        if (lastUpdateFileVersionsSelect < val["lastModified"]) {
+                            lastUpdateFileVersionsSelect = val["lastModified"];
+                        }
                     });
                 }
             });
@@ -479,8 +489,8 @@
                 <option selected disabled hidden style='display: none' value=''>Select your option</option>
             </select>
             <br><br><br>
-            <input id="downloadVersionButton" type="button" value="Download File Version" />
-            <input id="deleteVersionButton" type="button" value="Delete File Version" />
+            <input id="downloadVersionButton" type="button" value="Download File Version" disabled/>
+            <input id="deleteVersionButton" type="button" value="Delete File Version" disabled/>
             <br><br>
             <p>Create new file:</p>
             <input type="text" id="newFileName">
